@@ -1,0 +1,67 @@
+<link rel="import" href="../../../polymer/polymer.html">
+
+<link rel="import" href="../../more-route.html">
+
+<link rel="import" href="polyfora-user-ref.html">
+
+<polymer-element name="polyfora-thread" attributes="data">
+  <template>
+    <more-route context name="thread" params="{{params}}"></more-route>
+
+    <style>
+      :host {
+        display: block;
+        padding: 16px;
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      :host > paper-shadow {
+        z-index: 0;
+      }
+
+      .byline {
+        margin-bottom: 8px;
+      }
+
+      .post {
+        border-top:    1px solid #eeeeee;
+        border-bottom: 1px solid #eeeeee;
+        margin: -1px -16px 0 -16px;
+        padding: 8px 16px;
+      }
+
+      .post .author {
+        width: 64px;
+        text-align: right;
+      }
+    </style>
+
+    <paper-shadow hero-id="thread/{{_thread.id}}:container" hero cross-fade fit></paper-shadow>
+
+    <header paper-font-style="headline" hero-id="thread/{{_thread.id}}:title" hero>{{_thread.title}}</header>
+    <div class="byline"><span cross-fade>by </span><polyfora-user-ref user="{{_thread.author}}" hero></polyfora-user-ref></div>
+
+    <template repeat="{{post in _thread.posts}}">
+      <section class="post" layout horizontal cross-fade>
+        <div class="body" flex>{{post.body}}</div>
+        <polyfora-user-ref class="author" user="{{post.author}}"></polyfora-user-ref>
+      </section>
+    </template>
+  </template>
+  <script>
+    Polymer('polyfora-thread', {
+      observe: {
+        'params.forumId':  'threadChanged',
+        'params.threadId': 'threadChanged',
+      },
+
+      threadChanged: function() {
+        // We freeze the displayed thread so that transitions aren't wonky.
+        if (!this.params.forumId || !this.params.threadId) return;
+        this._forum  = this.data.forumsById[this.params.forumId];
+        this._thread = this._forum && this._forum.threadsById[this.params.threadId];
+      },
+    });
+  </script>
+</polymer-element>

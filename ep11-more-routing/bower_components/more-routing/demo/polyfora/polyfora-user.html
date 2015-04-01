@@ -1,0 +1,47 @@
+<link rel="import" href="../../../polymer/polymer.html">
+
+<link rel="import" href="../../more-route.html">
+<link rel="import" href="../../more-route-selector.html">
+
+<polymer-element name="polyfora-user" attributes="data" noscript>
+  <template>
+    <more-route context name="user" params="{{params}}"></more-route>
+
+    <style>
+      :host {
+        display: block;
+        padding: 16px;
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      paper-tabs {
+        margin: 0 -16px;
+        border-bottom: 1px solid #ff4080;
+      }
+
+      paper-tabs::shadow #selectionBar {
+        background-color: #ff4080;
+      }
+
+      paper-tab::shadow #ink {
+        color: #ff4080;
+      }
+    </style>
+
+    <header paper-font-style="headline" hero-id="user/{{params.userId}}:name" hero>{{data.usersById[params.userId].name}}</header>
+
+    <!--
+    If your more-route-selector contains routes without any params, it can also
+    be driven in reverse! In this example, the user can tap a tab, and the URL
+    will be automatically updated to match the active tab.
+    -->
+    <more-route-selector>
+      <paper-tabs>
+        <paper-tab route="/threads">Threads</paper-tab>
+        <paper-tab route="/stats">Statistics</paper-tab>
+        <paper-tab route="/">Stuff</paper-tab>
+      </paper-tabs>
+    </more-route-selector>
+  </template>
+</polymer-element>

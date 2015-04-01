@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../../webcomponentsjs/webcomponents.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+    <link rel="import" href="../more-route.html">
+    <link rel="import" href="../more-routing.html">
+  </head>
+  <body>
+    <more-routing-config driver="hash"></more-routing-config>
+    <more-route name="user" path="/user/:userId">
+      <more-route name="userSettings" path="/settings"></more-route>
+      <more-route name="userProfile" path="/profile"></more-route>
+    </more-route>
+    <more-route name="userFavorites" path="/user/:userId/userFavorites"></more-route>
+    <script>
+      var pages, selector;
+      var routeUserId = function routeUserId(route) {
+        return MoreRouting.getRoute(route).params.userId;
+      }
+      suite('nested route behavior', function() {
+        setup(function(done) {
+          async.series([
+            function(cb) {
+              MoreRouting.navigateTo("userSettings", {userId: 1234});
+              cb();
+            },
+            flush,
+          ], done);
+        });
+
+        test('navigates to nested route without specifying params', function(done) {
+          async.series([
+            function(cb) {
+              MoreRouting.navigateTo("userProfile");
+              cb();
+            },
+            flush,
+            function(cb) {
+              assert(routeUserId("user") !== undefined,
+                     "route('user').userId should be defined");
+              assert(routeUserId("userProfile") === routeUserId("user"),
+                     "route('userProfile').userId should match route('user').userId");
+              cb()
+            }
+          ], done);
+        });
+
+        test('navigates to nested route with specifying params', function(done) {
+          async.series([
+            function(cb) {
+              MoreRouting.navigateTo("userProfile", {userId: 2345});
+              cb();
+            },
+            flush,
+            function(cb) {
+              assert(routeUserId("user") === "2345");
+              cb()
+            }
+          ], done);
+        });
+
+        test('Same-path routes without parent/child relationships should work.', function(done) {
+          async.series([
+            function(cb) {
+              MoreRouting.navigateTo("userFavorites", {userId: 2345});
+              cb();
+            },
+            flush,
+            function(cb) {
+              assert(routeUserId("user") === "2345");
+              assert(routeUserId("userFavorites") === "2345");
+              cb()
+            }
+          ], done);
+        });
+
+      });
+    </script>
+  </body>
+</html>

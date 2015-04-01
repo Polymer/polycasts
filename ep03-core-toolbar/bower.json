@@ -1,0 +1,21 @@
+{
+  "name": "toolbar-demo",
+  "version": "0.0.0",
+  "authors": [
+    "Rob Dodson <robdodson@google.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "core-toolbar": "Polymer/core-toolbar#~0.4.1",
+    "paper-icon-button": "Polymer/paper-icon-button#~0.4.1",
+    "core-header-panel": "Polymer/core-header-panel#~0.4.1",
+    "paper-progress": "Polymer/paper-progress#~0.4.1"
+  }
+}

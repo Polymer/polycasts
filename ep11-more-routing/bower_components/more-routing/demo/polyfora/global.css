@@ -1,0 +1,102 @@
+html, body {
+  height: 100%;
+  font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  margin: 0;
+  font-size: 13px;
+  background: #f9f9f9;
+}
+
+html > body .header {
+  background-color: #ff4080;
+  color: #ffffff;
+  display: block;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.content {
+  position: relative;
+  height: calc(100% - 64px);
+  overflow-y: auto;
+}
+
+more-route-selector, core-animated-pages {
+  display: block;
+  height: 100%;
+}
+
+core-animated-pages {
+  position: relative;
+}
+
+/* Exceprt from https://github.com/nevir/paper-theme-experiment/blob/master/global/typography.html */
+
+html /deep/ [paper-font-style=display-2] {
+  display: inline-block;
+  color: #757575;
+  font-size: 45px;
+  font-weight: 400;
+  letter-spacing: -.018em;
+  line-height: 48px;
+  text-indent: -0.08em;
+  text-rendering: optimizeLegibility;
+}
+
+html /deep/ [paper-font-style=display-1] {
+  display: inline-block;
+  color: #757575;
+  font-size: 34px;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 40px;
+  text-indent: -0.08em;
+  text-rendering: optimizeLegibility;
+}
+
+html /deep/ [paper-font-style=headline] {
+  display: inline-block;
+  color: #212121;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: -.012em;
+  line-height: 32px;
+  text-indent: -0.078em;
+  text-rendering: optimizeLegibility;
+}
+
+html /deep/ [paper-font-style=title] {
+  display: inline-block;
+  color: #212121;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 28px;  /* guessed */
+  text-indent: -0.07em;
+  text-rendering: optimizeLegibility;
+}
+
+html /deep/ [paper-font-style=subhead] {
+  display: inline-block;
+  color: #212121;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;  /* guessed */
+  text-indent: -0.068em;
+  text-rendering: optimizeLegibility;
+}
+
+html /deep/ [paper-font-style=body-1] {
+  color: #212121;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;  /* guessed */
+  text-indent: -0.074em;
+}
+
+html /deep/ [paper-font-style=caption] {
+  color: #757575;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.011em;
+  line-height: 20px;  /* guessed */
+  text-indent: -0.04em;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="elements.html">
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body fullbleed fit layout vertical>
+  
+  <template is="auto-binding" id="app">
+    <core-list data="{{data}}" flex>
+      <template>
+        <div class="row" layout horizontal center>
+          <core-image class="avatar"
+                      src="{{model.avatar}}"
+                      preload
+                      sizing="cover">
+          </core-image>
+          <div>{{model.name}}</div>
+        </div>
+      </template>
+    </core-list>
+  </template>
+  
+  <script src="bower_components/Faker/build/build/faker.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

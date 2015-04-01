@@ -1,0 +1,52 @@
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../paper-ripple/paper-ripple.html">
+
+<polymer-element name="polyfora-user-ref" attributes="user hero" on-tap="{{_onTap}}">
+  <template>
+    <style>
+      :host {
+        display:  inline-block;
+        position: relative;
+        cursor:   pointer;
+      }
+    </style>
+    <paper-ripple fit></paper-ripple>
+    <content></content>
+  </template>
+  <script>
+    Polymer('polyfora-user-ref', {
+      userChanged: function() {
+        if (this.nameEl) {
+          this.nameEl.remove();
+        }
+        if (!this.user) return;
+
+        // Insert the user name into light DOM so that it can be plucked out by
+        // the hero transition of core-animated-pages.
+        this.nameEl = document.createElement('span');
+        this.nameEl.textContent = this.user.name;
+        this.nameEl.setAttribute('hero-id', 'user/' + this.user.id + ':name');
+        if (this.hasAttribute('hero')) {
+          this.nameEl.setAttribute('hero', '');
+        }
+
+        this.appendChild(this.nameEl);
+      },
+
+      _onTap: function() {
+        MoreRouting.navigateTo('user', {userId: this.user.id});
+        event.stopPropagation();
+        this.makeHero();
+      },
+
+      makeHero: function() {
+        if (this.hasAttribute('hero')) return;
+
+        this.nameEl.setAttribute('hero', '');
+        setTimeout(function() {
+          this.nameEl.removeAttribute('hero');
+        }.bind(this), 500)
+      },
+    });
+  </script>
+</polymer-element>

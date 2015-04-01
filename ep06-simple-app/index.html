@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="elements.html">
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body unresolved fullbleed layout vertical>
+  <core-drawer-panel id="drawerPanel">
+    <core-header-panel drawer>
+      <core-toolbar>Menu</core-toolbar>
+      <core-menu>
+        <core-item label="One"></core-item>
+        <core-item label="Two"></core-item>
+      </core-menu>
+    </core-header-panel>
+
+    <core-header-panel main>
+      <core-toolbar>
+        <core-icon-button core-drawer-toggle icon="menu">
+        </core-icon-button>
+        <div>MY APP</div>
+      </core-toolbar>
+      <div class="content"></div>
+    </core-header-panel>
+  </core-drawer-panel>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

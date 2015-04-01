@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <script src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="bower_components/core-icon/core-icon.html">
+    <link rel="import" href="bower_components/core-icons/av-icons.html">
+    <link rel="import"
+      href="bower_components/core-icon-button/core-icon-button.html">
+    <link rel="import" href="custom-icons.html">
+
+    <style>
+      core-icon circle {
+        fill: #0b50bf;
+      }
+      core-icon circle:first-child {
+        fill: #66bbff;
+      }
+      core-icon circle:last-child {
+        fill: #0083ff;
+      }
+      .icon-play {
+        color: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <core-icon icon="custom-icons:fancy-circles"></core-icon>
+    <core-icon class="icon-play" icon="av:play-arrow"></core-icon>
+    <core-icon-button icon="av:play-arrow"></core-icon-button>
+  </body>
+</html>

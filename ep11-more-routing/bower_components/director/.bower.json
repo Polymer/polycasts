@@ -1,0 +1,20 @@
+{
+  "name": "director",
+  "version": "1.2.5",
+  "dependencies": {},
+  "main": "build/director.js",
+  "scripts": [
+    "build/director.js"
+  ],
+  "homepage": "https://github.com/flatiron/director",
+  "_release": "1.2.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.5",
+    "commit": "ccc6b8df8bf440876e0985b89ffb13a0c5d15923"
+  },
+  "_source": "git://github.com/flatiron/director.git",
+  "_target": "~1.2.5",
+  "_originalSource": "director",
+  "_direct": true
+}

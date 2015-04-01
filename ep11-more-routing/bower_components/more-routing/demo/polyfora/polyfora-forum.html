@@ -1,0 +1,91 @@
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../paper-ripple/paper-ripple.html">
+<link rel="import" href="../../../paper-shadow/paper-shadow.html">
+
+<link rel="import" href="../../more-route.html">
+
+<link rel="import" href="polyfora-user-ref.html">
+
+<polymer-element name="polyfora-forum" attributes="data">
+  <template>
+    <more-route context name="forum" params="{{params}}"></more-route>
+
+    <style>
+      :host {
+        display: block;
+        padding: 16px;
+        height: 100%;
+        box-sizing: border-box;
+      }
+
+      :host > paper-shadow {
+        z-index: 0;
+      }
+
+      .headers {
+        margin-top: 8px;
+      }
+
+      .title, .posts, .author {
+        padding: 8px;
+      }
+
+      .author {
+        width: 64px;
+      }
+
+      .thread {
+        position: relative;
+        margin: 8px 0;
+        cursor: pointer;
+        line-height: 24px; /* to match subhead */
+      }
+    </style>
+
+    <paper-shadow hero-id="forum/{{_forum.id}}:container" hero cross-fade fit></paper-shadow>
+
+    <header paper-font-style="headline" hero-id="forum/{{_forum.id}}:title" hero>{{_forum.title}}</header>
+
+    <section paper-font-style="caption" cross-fade layout horizontal>
+      <div class="title" flex>Thread</div>
+      <div class="posts">Posts</div>
+      <div class="author">Author</div>
+    </section>
+
+    <template repeat="{{thread in _forum.threads}}">
+      <section class="thread" cross-fade layout horizontal center on-tap="{{_onThreadTapped}}">
+        <paper-shadow fit hero-id="thread/{{thread.id}}:container" hero></paper-shadow>
+        <paper-ripple fit></paper-ripple>
+
+        <div class="title" flex>
+          <span paper-font-style="subhead" hero-id="thread/{{thread.id}}:title" hero>{{thread.title}}</span>
+        </div>
+        <div class="posts">7</div>
+        <polyfora-user-ref class="author" user="{{thread.author}}"></polyfora-user-ref>
+      </section>
+    </template>
+  </template>
+  <script>
+    Polymer('polyfora-forum', {
+      observe: {
+        'params.forumId': 'forumIdChanged',
+      },
+
+      forumIdChanged: function() {
+        // We freeze the displayed forum so that transitions aren't wonky.
+        if (!this.params.forumId) return;
+        this._forum = this.data.forumsById[this.params.forumId];
+      },
+
+      _onThreadTapped: function(event, detail, target) {
+        var thread = target.templateInstance.model.thread;
+        // In addition to routing via a `more-route` element, more-routing's
+        // JavaScript API also exposes helpers:
+        MoreRouting.navigateTo('thread', {forumId: this._forum.id, threadId: thread.id});
+        event.stopPropagation();
+
+        target.querySelector('.author').makeHero();
+      },
+    });
+  </script>
+</polymer-element>

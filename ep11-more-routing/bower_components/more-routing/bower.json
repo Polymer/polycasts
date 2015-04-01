@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "more-routing",
+  "dependencies": {
+    "core-item": "Polymer/core-item#^0.5.0",
+    "more-switch": "Polymore/more-switch",
+    "polymer": "Polymer/polymer#^0.5.0"
+  },
+  "devDependencies": {
+    "core-animated-pages": "Polymer/core-animated-pages#^0.5.0",
+    "core-pages": "Polymer/core-pages#^0.5.0",
+    "core-scaffold": "Polymer/core-scaffold#^0.5.0",
+    "font-roboto": "Polymer/font-roboto#^0.5.0",
+    "more-param": "Polymore/more-param",
+    "paper-ripple": "Polymer/paper-ripple#^0.5.0",
+    "paper-shadow": "Polymer/paper-shadow#^0.5.0",
+    "paper-tabs": "Polymer/paper-tabs#^0.5.0",
+    "web-component-tester": "*",
+    "webcomponentsjs": "Polymer/webcomponentsjs"
+  }
+}

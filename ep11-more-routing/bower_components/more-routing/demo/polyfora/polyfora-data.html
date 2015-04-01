@@ -1,0 +1,108 @@
+<link rel="import" href="../../../polymer/polymer.html">
+
+<polymer-element name="polyfora-data" attributes="data">
+  <script>
+  (function() {
+    var LIPSUM = ['a', 'ac', 'accumsan', 'ad', 'adipiscing', 'aliquam', 'aliquet', 'amet', 'ante', 'aptent', 'arcu', 'at', 'auctor', 'augue', 'bibendum', 'blandit', 'class', 'commodo', 'condimentum', 'congue', 'consectetur', 'conubia', 'convallis', 'cras', 'cubilia', 'curae', 'cursus', 'dapibus', 'diam', 'dictum', 'dolor', 'donec', 'dui', 'duis', 'efficitur', 'eget', 'eleifend', 'elit', 'enim', 'erat', 'eros', 'est', 'et', 'eu', 'ex', 'facilisis', 'fames', 'faucibus', 'felis', 'fermentum', 'feugiat', 'finibus', 'fringilla', 'fusce', 'gravida', 'hendrerit', 'himenaeos', 'iaculis', 'id', 'in', 'inceptos', 'interdum', 'ipsum', 'justo', 'lacinia', 'lacus', 'laoreet', 'lectus', 'leo', 'ligula', 'litora', 'lobortis', 'lorem', 'luctus', 'maecenas', 'magna', 'malesuada', 'massa', 'mattis', 'mauris', 'maximus', 'metus', 'mi', 'molestie', 'mollis', 'morbi', 'nam', 'nec', 'neque', 'nibh', 'nisi', 'nisl', 'non', 'nostra', 'nulla', 'nullam', 'nunc', 'odio', 'orci', 'ornare', 'pellentesque', 'per', 'pharetra', 'phasellus', 'placerat', 'porta', 'porttitor', 'posuere', 'potenti', 'praesent', 'pretium', 'primis', 'proin', 'pulvinar', 'purus', 'quam', 'quis', 'quisque', 'rhoncus', 'risus', 'rutrum', 'sagittis', 'sapien', 'scelerisque', 'sed', 'sem', 'semper', 'sit', 'sociosqu', 'sodales', 'sollicitudin', 'suscipit', 'suspendisse', 'taciti', 'tellus', 'tempor', 'tempus', 'tincidunt', 'torquent', 'tortor', 'tristique', 'turpis', 'ullamcorper', 'ultrices', 'ultricies', 'urna', 'ut', 'varius', 'vehicula', 'vel', 'velit', 'venenatis', 'vestibulum', 'vitae', 'vivamus', 'viverra', 'volutpat', 'vulputate'];
+    var PEEPS  = ['Addy O', 'AJ O', 'Arthur E', 'Chris J', 'Daniel F', 'Dimitri G', 'Eric B', 'Frankie F', 'Ian M', 'Justin F', 'Keanu L', 'Kevin S', 'Matt M', 'Rob D', 'Ross A', 'Scott M', 'Steve O', 'Taylor S', 'Yvonne Y'];
+
+    Polymer('polyfora-data', {
+
+      ready: function() {
+        this.data       = this;
+        this.users      = this._generateUsers();
+        this.usersById  = idMap(this.users);
+        this.forums     = this._generateForums();
+        this.forumsById = idMap(this.forums);
+      },
+
+      _generateUsers: function() {
+        return PEEPS.map(function(name) {
+          return {
+            id:   slug(name),
+            name: name,
+          }
+        });
+      },
+
+      _generateForums: function() {
+        return generate(3, function() {
+          var title   = phrase(4);
+          var threads = this._generateThreads();
+
+          return {
+            id:          slug(title),
+            title:       title,
+            desc:        paragraph(5),
+            threads:     threads,
+            threadsById: idMap(threads),
+          }
+        }.bind(this));
+      },
+
+      _generateThreads: function() {
+        return generate(rand(3, 15), function() {
+          var title  = phrase(6);
+          var author = pick(this.users)
+
+          return {
+            id:     slug(title),
+            title:  title,
+            author: author,
+            posts:  this._generatePosts(author),
+          };
+        }.bind(this));
+      },
+
+      _generatePosts: function(initialAuthor) {
+        return generate(rand(1, 5), function(i) {
+          return {
+            body:   paragraph(5),
+            author: i === 0 ? initialAuthor : pick(this.users),
+          };
+        }.bind(this));
+      },
+
+    });
+
+    function rand(min, max) {
+      return Math.round(Math.random() * (max - min) + min);
+    }
+
+    function pick(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    function phrase(size) {
+      var words = generate(rand(size / 2, size), pick.bind(null, LIPSUM));
+      words[0] = words[0].substr(0, 1).toUpperCase() + words[0].substr(1);
+      return words.join(' ');
+    }
+
+    function paragraph(size) {
+      return generate(rand(size / 2, size), phrase.bind(null, 10)).join('. ');
+    }
+
+    function slug(string) {
+      return string.toLowerCase().replace(/[^a-z]+/g, '-');
+    }
+
+    function generate(times, callback) {
+      var result = [];
+      for (var i = 0; i < times; i++) {
+        result.push(callback(i));
+      }
+      return result;
+    }
+
+    function idMap(items) {
+      var result = {};
+      for (var i = 0, item; item = items[i]; i++) {
+        result[item.id] = item;
+      }
+      return result;
+    }
+
+  })();
+  </script>
+</polymer-element>

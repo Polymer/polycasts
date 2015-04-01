@@ -1,0 +1,87 @@
+<link rel="import" href="../../../polymer/polymer.html">
+<link rel="import" href="../../../paper-ripple/paper-ripple.html">
+<link rel="import" href="../../../paper-shadow/paper-shadow.html">
+
+<link rel="import" href="../../more-route.html">
+
+<polymer-element name="polyfora-forum-index" attributes="data">
+  <template>
+    <more-route context name="root"></more-route>
+
+    <style>
+      :host {
+        display: block;
+        padding: 16px;
+      }
+
+      .forum {
+        position: relative;
+        margin: 8px 0;
+        padding: 8px;
+        cursor: pointer;
+      }
+
+      .forum > paper-shadow {
+        z-index: 0;
+      }
+
+      .description {
+        margin-top: 8px;
+      }
+    </style>
+
+    <header paper-font-style="caption" cross-fade>Forums</header>
+
+    <template repeat="{{forum in _forumList}}">
+      <section class="forum" on-tap="{{_onForumTapped}}">
+        <paper-shadow hero-id="forum/{{forum.id}}:container" hero cross-fade fit></paper-shadow>
+        <paper-ripple fit></paper-ripple>
+
+        <header paper-font-style="title" hero-id="forum/{{forum.id}}:title" hero cross-fade>{{forum.title}}</header>
+        <div class="description" cross-fade>{{forum.desc}}</div>
+      </section>
+    </template>
+
+    <!--
+    One way to interact routes is to declare references to them. In this case,
+    we want to navigate to individual forums (in response to user action), and
+    know when a particular forum route has activated (forward/back/etc).
+    -->
+    <more-route id="forumRoute" name="forum" params="{{params}}" on-more-route-active="{{_onForumRouteActive}}"></more-route>
+
+  </template>
+  <script>
+    Polymer('polyfora-forum-index', {
+      ready: function() {
+        this._forumList = [];
+        Object.keys(this.data.forums).forEach(function(id) {
+          this._forumList.push(this.data.forums[id]);
+        }.bind(this));
+      },
+
+      _onForumTapped: function(event, detail, target) {
+        var forum = target.templateInstance.model.forum;
+        // One way to navigate to a route is to call the `navigateTo` helper on
+        // a `more-route` element that references it:
+        this.$.forumRoute.navigateTo({forumId: forum.id});
+        // Another way is by calling `MoreRouting.navigateTo` with the name or
+        // path of the route and its params. You can see an example of this in
+        // `polyfora-forum.html`.
+      },
+
+      // We also want to know which forum has been routed to, so that we can set
+      // up the hero transition for that particular forum in the list.
+      _onForumRouteActive: function(event, detail, route) {
+        // Don't cross fade the title (it leaves a ghost); we just want it to
+        // hero.
+        var title = this.shadowRoot.querySelector('[hero-id="forum/' + route.params.forumId + ':title"]');
+        title.removeAttribute('cross-fade');
+        // Really, we should be listening to core-animated-pages-transition-end,
+        // but that's painful for nested elements.
+        setTimeout(function() {
+          title.setAttribute('cross-fade', '');
+        }, 500);
+      },
+    });
+  </script>
+</polymer-element>

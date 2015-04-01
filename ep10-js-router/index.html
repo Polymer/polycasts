@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="elements.html">
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+  <template is="auto-binding" id="app">
+    <core-drawer-panel>
+      <core-header-panel drawer>
+        <core-toolbar>Menu</core-toolbar>
+
+        <core-menu selected="{{route}}" valueattr="data-route">
+          <core-item data-route="home">
+            <a href="/">Home</a>
+          </core-item>
+          <core-item data-route="portfolio">
+            <a href="/portfolio">Portfolio</a>
+          </core-item>
+          <core-item data-route="contact">
+            <a href="/contact">Contact</a>
+          </core-item>
+        </core-menu>
+
+      </core-header-panel>
+      <core-header-panel main>
+        <core-toolbar>
+          <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
+          <div flex>My App</div>
+        </core-toolbar>
+        <div class="container" fit layout vertical>
+          
+          <core-pages selected="{{route}}" valueattr="data-route" fit>
+            <section data-route="home">
+              <h1>Home</h1>
+              <div>Home content</div>
+            </section>
+            <section data-route="portfolio">
+              <h1>Portfolio</h1>
+              <div>Portfolio content</div>
+            </section>
+            <section data-route="contact">
+              <h1>Contact</h1>
+              <div>Contact content</div>
+            </section>
+          </core-pages>
+
+        </div>
+      </core-header-panel>
+    </core-drawer-panel>
+  </template>
+  <script src="bower_components/page.js/page.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

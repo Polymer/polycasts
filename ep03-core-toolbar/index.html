@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <script src="bower_components/platform/platform.js"></script>
+  <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+  <link rel="import"
+    href="bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="bower_components/core-icons/core-icons.html">
+  <link rel="import" href="bower_components/paper-progress/paper-progress.html">
+  <style>
+    core-toolbar {
+      background-color: #03A9F4;
+      color: white;
+    }
+  </style>
+</head>
+
+<body unresolved fullbleed>
+  <core-toolbar class="tall core-narrow">
+    <paper-icon-button icon="menu"></paper-icon-button>
+    <div class="middle indent">My App</div>
+    <span flex></span>
+    <paper-icon-button icon="search"></paper-icon-button>
+    <paper-progress class="bottom fit" value="30"></paper-progress>
+  </core-toolbar>
+</body>
+
+</html>

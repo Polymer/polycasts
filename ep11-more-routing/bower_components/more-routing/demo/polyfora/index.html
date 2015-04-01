@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="../../../webcomponentsjs/webcomponents.js"></script>
+    <link rel="import" href="../../../core-animated-pages/core-animated-pages.html">
+    <link rel="import" href="../../../font-roboto/roboto.html">
+    <link rel="import" href="../../../paper-tabs/paper-tabs.html">
+    <link rel="import" href="../../more-route-selector.html">
+
+    <link rel="stylesheet" href="global.css">
+
+    <!--
+    `routes.html` configures more-routing, and specifies all of the named routes
+    for this application. Take a look at it.
+    -->
+    <link rel="import" href="routes.html">
+    <link rel="import" href="polyfora-data.html">
+    <link rel="import" href="polyfora-forum-index.html">
+    <link rel="import" href="polyfora-forum.html">
+    <link rel="import" href="polyfora-thread.html">
+    <link rel="import" href="polyfora-user.html">
+  </head>
+  <body>
+    <template is="auto-binding">
+      <polyfora-data data="{{data}}"></polyfora-data>
+
+      <!--
+      more-routing exposes a `urlFor` helper that will construct a URL for a
+      particular route (and params).
+      -->
+      <a href="{{urlFor('root')}}" class="header" paper-font-style="display-2">Polyfora</a>
+
+      <div class="content" paper-font-style="body-1">
+        <!--
+        `more-route-selector` manages any element that extends `core-selector`,
+        allowing you to associate each with a route. By default, it looks for
+        the `route` attribute on each item in the `core-selector`. You can see
+        an example of that default behavior in `polyfora-user.html`.
+
+        In this example, we have opted to construct our base pages such that
+        they declare _routing contexts_. Each element declares the route that it
+        represents, and `more-route-selector` uses this to select the correct
+        route to display.
+
+        See each page's `<more-route context ...>`.
+        -->
+        <more-route-selector selectedParams="{{params}}">
+          <core-animated-pages transitions="hero-transition cross-fade">
+            <polyfora-forum-index data="{{data}}"></polyfora-forum-index>
+            <polyfora-user        data="{{data}}"></polyfora-user>
+            <polyfora-forum       data="{{data}}"></polyfora-forum>
+            <polyfora-thread      data="{{data}}"></polyfora-thread>
+          </core-animated-pages>
+        </more-route-selector>
+
+      </div>
+
+    </template>
+  </body>
+</html>

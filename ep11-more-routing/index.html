@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+  <link rel="import" href="elements.html">
+  <link rel="stylesheet" href="app.css">
+</head>
+
+<body>
+  <template is="auto-binding" id="app">
+    <core-drawer-panel>
+      <core-header-panel drawer>
+        <core-toolbar>Menu</core-toolbar>
+        
+        <more-route-selector>
+          <core-menu>
+            <core-item label="Home" route="home">
+              <a href="{{urlFor('home')}}"></a>
+            </core-item>
+            <core-item label="Users" route="users">
+              <a href="{{urlFor('users')}}"></a>
+            </core-item>
+            <core-item label="Contact" route="contact">
+              <a href="{{urlFor('contact')}}"></a>
+            </core-item>
+          </core-menu>
+        </more-route-selector>
+
+      </core-header-panel>
+      <core-header-panel main>
+        <core-toolbar>
+          <paper-icon-button icon="menu" core-drawer-toggle></paper-icon-button>
+          <div flex>My App</div>
+        </core-toolbar>
+        <main>          
+          
+          <more-route-selector selectedParams="{{params}}">
+            <core-pages>
+              <section route="home">
+                <h1>Home</h1>
+                <div>This is the home section</div>
+              </section>
+
+              <section route="users">
+                <h1>Users</h1>
+                <div>This is the users section</div>
+                <a href="{{urlFor('user-info', {name: 'Rob'})}}">
+                  Click for Rob's section
+                </a>
+              </section>
+
+              <section route="user-info">
+                <h1>User: {{params.name}}</h1>
+                <div>This is {{params.name}}'s section</div>
+              </section>
+
+              <section route="contact">
+                <h1>Contact</h1>
+                <div>Gimme a shout!</div>
+              </section>
+            </core-pages>
+          </more-route-selector>
+
+        </main>
+      </core-header-panel>
+    </core-drawer-panel>
+
+  </template>
+  <script src="app.js"></script>
+</body>
+
+</html>
