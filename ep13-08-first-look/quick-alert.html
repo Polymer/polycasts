@@ -1,0 +1,30 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="quick-alert">
+  <style>
+    :host {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+    .alert {
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px;
+      font-family: Roboto, Helvetica, sans-serif;
+    }
+  </style>
+  <template>
+    <div class="alert">
+      <content></content>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'quick-alert'
+  });
+</script>
