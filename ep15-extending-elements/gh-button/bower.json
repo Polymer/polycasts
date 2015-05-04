@@ -1,0 +1,22 @@
+{
+  "name": "gh-button",
+  "version": "0.0.0",
+  "homepage": "https://github.com/robdodson/polycasts",
+  "authors": [
+    "Rob Dodson <robdodson@google.com>"
+  ],
+  "keywords": [
+    "web-component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#^0.8.0-rc.2"
+  }
+}
