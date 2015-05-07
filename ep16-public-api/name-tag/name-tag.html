@@ -1,0 +1,102 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="name-tag">
+  <style>
+    :host {
+      display: inline-block;
+      border: 2px solid black;
+      border-radius: 8px;
+      text-align: center;
+      background-color: red;
+    }
+    .fullname {
+      margin: 16px 0;
+      padding: 4px;
+      background-color: white;
+    }
+    :host(.shake) {
+      animation: shake 150ms 2 linear;
+      -moz-animation: shake 150ms 2 linear;
+      -webkit-animation: shake 150ms 2 linear;
+      -o-animation: shake 150ms 2 linear;
+    }
+    @keyframes shake {
+      0% {
+        transform: translate(3px, 0);
+      }
+      50% {
+        transform: translate(-3px, 0);
+      }
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    @-moz-keyframes shake {
+      0% {
+        -moz-transform: translate(3px, 0);
+      }
+      50% {
+        -moz-transform: translate(-3px, 0);
+      }
+      100% {
+        -moz-transform: translate(0, 0);
+      }
+    }
+
+    @-webkit-keyframes shake {
+      0% {
+        -webkit-transform: translate(3px, 0);
+      }
+      50% {
+        -webkit-transform: translate(-3px, 0);
+      }
+      100% {
+        -webkit-transform: translate(0, 0);
+      }
+    }
+
+    @-ms-keyframes shake {
+      0% {
+        -ms-transform: translate(3px, 0);
+      }
+      50% {
+        -ms-transform: translate(-3px, 0);
+      }
+      100% {
+        -ms-transform: translate(0, 0);
+      }
+    }
+
+    @-o-keyframes shake {
+      0% {
+        -o-transform: translate(3px, 0);
+      }
+      50% {
+        -o-transform: translate(-3px, 0);
+      }
+      100% {
+        -o-transform: translate(0, 0);
+      }
+    }
+  </style>
+  <template>
+    <div class="fullname">{{_computeFullName(first, last)}}</div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'name-tag',
+    properties: {
+      first: String,
+      last: String
+    },
+    _computeFullName: function(first, last) {
+      return first + ' ' + last;
+    },
+    shake: function() {
+      this.classList.toggle('shake');
+    }
+  });
+</script>
