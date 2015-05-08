@@ -1,0 +1,37 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="ui-message">
+  <style>
+    :host {
+      display: inline-block;
+    }
+    .container {
+      background-color: grey;
+      padding: 10px;
+      @apply(--ui-message-container-theme)
+    }
+    .header {
+      color: var(--ui-message-header-color);
+      @apply(--ui-message-header-theme)
+    }
+    .content {
+      @apply(--ui-message-content-theme)
+    }
+  </style>
+  <template>
+    <div class="container">
+      <div class="header">{{header}}</div>
+      <p class="content">{{message}}</p>
+    </div>
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+    is: 'ui-message',
+    properties: {
+      header: String,
+      message: String
+    }
+  });
+</script>
