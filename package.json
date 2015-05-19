@@ -1,0 +1,22 @@
+{
+  "name": "polycasts",
+  "version": "1.0.0",
+  "description": "[Polycasts](https://www.youtube.com/playlist?list=PLOU2XLYxmsII5c3Mgw6fNYCzaWrsM3sMN) is a biweekly YouTube series covering all things Polymer and Web Comoponents.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robdodson/polycasts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robdodson/polycasts/issues"
+  },
+  "homepage": "https://github.com/robdodson/polycasts",
+  "dependencies": {
+    "notary": "git://github.com/PolymerLabs/notary"
+  }
+}
