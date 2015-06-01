@@ -7,7 +7,7 @@
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
-// @version 0.6.1
+// @version 0.7.2
 window.WebComponents = window.WebComponents || {};
 
 (function(scope) {
@@ -15,9 +15,12 @@ window.WebComponents = window.WebComponents || {};
   var file = "webcomponents.js";
   var script = document.querySelector('script[src*="' + file + '"]');
   if (!flags.noOpts) {
-    location.search.slice(1).split("&").forEach(function(o) {
-      o = o.split("=");
-      o[0] && (flags[o[0]] = o[1] || true);
+    location.search.slice(1).split("&").forEach(function(option) {
+      var parts = option.split("=");
+      var match;
+      if (parts[0] && (match = parts[0].match(/wc-(.+)/))) {
+        flags[match[1]] = parts[1] || true;
+      }
     });
     if (script) {
       for (var i = 0, a; a = script.attributes[i]; i++) {
@@ -247,6 +250,9 @@ if (WebComponents.flags.shadow) {
       }
     }
     function register(nativeConstructor, wrapperConstructor, opt_instance) {
+      if (nativeConstructor == null) {
+        return;
+      }
       var nativePrototype = nativeConstructor.prototype;
       registerInternal(nativePrototype, wrapperConstructor, opt_instance);
       mixinStatics(wrapperConstructor, nativeConstructor);
@@ -2280,7 +2286,14 @@ if (WebComponents.flags.shadow) {
         return backwardsElement(this.previousSibling);
       }
     };
+    var NonElementParentNodeInterface = {
+      getElementById: function(id) {
+        if (/[ \t\n\r\f]/.test(id)) return null;
+        return this.querySelector('[id="' + id + '"]');
+      }
+    };
     scope.ChildNodeInterface = ChildNodeInterface;
+    scope.NonElementParentNodeInterface = NonElementParentNodeInterface;
     scope.ParentNodeInterface = ParentNodeInterface;
   })(window.ShadowDOMPolyfill);
   (function(scope) {
@@ -2556,6 +2569,12 @@ if (WebComponents.flags.shadow) {
     }
     var voidElements = makeSet([ "area", "base", "br", "col", "command", "embed", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr" ]);
     var plaintextParents = makeSet([ "style", "script", "xmp", "iframe", "noembed", "noframes", "plaintext", "noscript" ]);
+    var XHTML_NS = "http://www.w3.org/1999/xhtml";
+    function needsSelfClosingSlash(node) {
+      if (node.namespaceURI !== XHTML_NS) return true;
+      var doctype = node.ownerDocument.doctype;
+      return doctype && doctype.publicId && doctype.systemId;
+    }
     function getOuterHTML(node, parentNode) {
       switch (node.nodeType) {
        case Node.ELEMENT_NODE:
@@ -2565,9 +2584,11 @@ if (WebComponents.flags.shadow) {
         for (var i = 0, attr; attr = attrs[i]; i++) {
           s += " " + attr.name + '="' + escapeAttr(attr.value) + '"';
         }
-        s += ">";
-        if (voidElements[tagName]) return s;
-        return s + getInnerHTML(node) + "</" + tagName + ">";
+        if (voidElements[tagName]) {
+          if (needsSelfClosingSlash(node)) s += "/";
+          return s + ">";
+        }
+        return s + ">" + getInnerHTML(node) + "</" + tagName + ">";
 
        case Node.TEXT_NODE:
         var data = node.data;
@@ -3283,6 +3304,7 @@ if (WebComponents.flags.shadow) {
   (function(scope) {
     "use strict";
     var GetElementsByInterface = scope.GetElementsByInterface;
+    var NonElementParentNodeInterface = scope.NonElementParentNodeInterface;
     var ParentNodeInterface = scope.ParentNodeInterface;
     var SelectorsInterface = scope.SelectorsInterface;
     var mixin = scope.mixin;
@@ -3291,6 +3313,7 @@ if (WebComponents.flags.shadow) {
     mixin(DocumentFragment.prototype, ParentNodeInterface);
     mixin(DocumentFragment.prototype, SelectorsInterface);
     mixin(DocumentFragment.prototype, GetElementsByInterface);
+    mixin(DocumentFragment.prototype, NonElementParentNodeInterface);
     var Comment = registerObject(document.createComment(""));
     scope.wrappers.Comment = Comment;
     scope.wrappers.DocumentFragment = DocumentFragment;
@@ -3309,7 +3332,6 @@ if (WebComponents.flags.shadow) {
     var unwrap = scope.unwrap;
     var shadowHostTable = new WeakMap();
     var nextOlderShadowTreeTable = new WeakMap();
-    var spaceCharRe = /[ \t\n\r\f]/;
     function ShadowRoot(hostWrapper) {
       var node = unwrap(unsafeUnwrap(hostWrapper).ownerDocument.createDocumentFragment());
       DocumentFragment.call(this, node);
@@ -3340,10 +3362,6 @@ if (WebComponents.flags.shadow) {
       },
       elementFromPoint: function(x, y) {
         return elementFromPoint(this, this.ownerDocument, x, y);
-      },
-      getElementById: function(id) {
-        if (spaceCharRe.test(id)) return null;
-        return this.querySelector('[id="' + id + '"]');
       }
     });
     scope.wrappers.ShadowRoot = ShadowRoot;
@@ -3996,6 +4014,7 @@ if (WebComponents.flags.shadow) {
     var GetElementsByInterface = scope.GetElementsByInterface;
     var Node = scope.wrappers.Node;
     var ParentNodeInterface = scope.ParentNodeInterface;
+    var NonElementParentNodeInterface = scope.NonElementParentNodeInterface;
     var Selection = scope.wrappers.Selection;
     var SelectorsInterface = scope.SelectorsInterface;
     var ShadowRoot = scope.wrappers.ShadowRoot;
@@ -4030,7 +4049,7 @@ if (WebComponents.flags.shadow) {
         return wrap(original.apply(unsafeUnwrap(this), arguments));
       };
     }
-    [ "createComment", "createDocumentFragment", "createElement", "createElementNS", "createEvent", "createEventNS", "createRange", "createTextNode", "getElementById" ].forEach(wrapMethod);
+    [ "createComment", "createDocumentFragment", "createElement", "createElementNS", "createEvent", "createEventNS", "createRange", "createTextNode" ].forEach(wrapMethod);
     var originalAdoptNode = document.adoptNode;
     function adoptNodeNoRemove(node, doc) {
       originalAdoptNode.call(unsafeUnwrap(doc), unwrap(node));
@@ -4154,6 +4173,7 @@ if (WebComponents.flags.shadow) {
     mixin(Document.prototype, GetElementsByInterface);
     mixin(Document.prototype, ParentNodeInterface);
     mixin(Document.prototype, SelectorsInterface);
+    mixin(Document.prototype, NonElementParentNodeInterface);
     mixin(Document.prototype, {
       get implementation() {
         var implementation = implementationTable.get(this);
@@ -4172,6 +4192,11 @@ if (WebComponents.flags.shadow) {
     function DOMImplementation(impl) {
       setWrapper(impl, this);
     }
+    var originalCreateDocument = document.implementation.createDocument;
+    DOMImplementation.prototype.createDocument = function() {
+      arguments[2] = unwrap(arguments[2]);
+      return wrap(originalCreateDocument.apply(unsafeUnwrap(this), arguments));
+    };
     function wrapImplMethod(constructor, name) {
       var original = document.implementation[name];
       constructor.prototype[name] = function() {
@@ -4185,11 +4210,10 @@ if (WebComponents.flags.shadow) {
       };
     }
     wrapImplMethod(DOMImplementation, "createDocumentType");
-    wrapImplMethod(DOMImplementation, "createDocument");
     wrapImplMethod(DOMImplementation, "createHTMLDocument");
     forwardImplMethod(DOMImplementation, "hasFeature");
     registerWrapper(window.DOMImplementation, DOMImplementation);
-    forwardMethodsToWrapper([ window.DOMImplementation ], [ "createDocumentType", "createDocument", "createHTMLDocument", "hasFeature" ]);
+    forwardMethodsToWrapper([ window.DOMImplementation ], [ "createDocument", "createDocumentType", "createHTMLDocument", "hasFeature" ]);
     scope.adoptNodeNoRemove = adoptNodeNoRemove;
     scope.wrappers.DOMImplementation = DOMImplementation;
     scope.wrappers.Document = Document;
@@ -4664,7 +4688,7 @@ if (WebComponents.flags.shadow) {
         }
       }
     };
-    var selectorRe = /([^{]*)({[\s\S]*?})/gim, cssCommentRe = /\/\*[^*]*\*+([^/*][^*]*\*+)*\//gim, cssCommentNextSelectorRe = /\/\*\s*@polyfill ([^*]*\*+([^/*][^*]*\*+)*\/)([^{]*?){/gim, cssContentNextSelectorRe = /polyfill-next-selector[^}]*content\:[\s]*?['"](.*?)['"][;\s]*}([^{]*?){/gim, cssCommentRuleRe = /\/\*\s@polyfill-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim, cssContentRuleRe = /(polyfill-rule)[^}]*(content\:[\s]*['"](.*?)['"])[;\s]*[^}]*}/gim, cssCommentUnscopedRuleRe = /\/\*\s@polyfill-unscoped-rule([^*]*\*+([^/*][^*]*\*+)*)\//gim, cssContentUnscopedRuleRe = /(polyfill-unscoped-rule)[^}]*(content\:[\s]*['"](.*?)['"])[;\s]*[^}]*}/gim, cssPseudoRe = /::(x-[^\s{,(]*)/gim, cssPartRe = /::part\(([^)]*)\)/gim, polyfillHost = "-shadowcsshost", polyfillHostContext = "-shadowcsscontext", parenSuffix = ")(?:\\((" + "(?:\\([^)(]*\\)|[^)(]*)+?" + ")\\))?([^,{]*)";
+    var selectorRe = /([^{]*)({[\s\S]*?})/gim, cssCommentRe = /\/\*[^*]*\*+([^\/*][^*]*\*+)*\//gim, cssCommentNextSelectorRe = /\/\*\s*@polyfill ([^*]*\*+([^\/*][^*]*\*+)*\/)([^{]*?){/gim, cssContentNextSelectorRe = /polyfill-next-selector[^}]*content\:[\s]*?['"](.*?)['"][;\s]*}([^{]*?){/gim, cssCommentRuleRe = /\/\*\s@polyfill-rule([^*]*\*+([^\/*][^*]*\*+)*)\//gim, cssContentRuleRe = /(polyfill-rule)[^}]*(content\:[\s]*['"](.*?)['"])[;\s]*[^}]*}/gim, cssCommentUnscopedRuleRe = /\/\*\s@polyfill-unscoped-rule([^*]*\*+([^\/*][^*]*\*+)*)\//gim, cssContentUnscopedRuleRe = /(polyfill-unscoped-rule)[^}]*(content\:[\s]*['"](.*?)['"])[;\s]*[^}]*}/gim, cssPseudoRe = /::(x-[^\s{,(]*)/gim, cssPartRe = /::part\(([^)]*)\)/gim, polyfillHost = "-shadowcsshost", polyfillHostContext = "-shadowcsscontext", parenSuffix = ")(?:\\((" + "(?:\\([^)(]*\\)|[^)(]*)+?" + ")\\))?([^,{]*)";
     var cssColonHostRe = new RegExp("(" + polyfillHost + parenSuffix, "gim"), cssColonHostContextRe = new RegExp("(" + polyfillHostContext + parenSuffix, "gim"), selectorReSuffix = "([>\\s~+[.,{:][\\s\\S]*)?$", colonHostRe = /\:host/gim, colonHostContextRe = /\:host-context/gim, polyfillHostNoCombinator = polyfillHost + "-no-combinator", polyfillHostRe = new RegExp(polyfillHost, "gim"), polyfillHostContextRe = new RegExp(polyfillHostContext, "gim"), shadowDOMSelectorsRe = [ />>>/g, /::shadow/g, /::content/g, /\/deep\//g, /\/shadow\//g, /\/shadow-deep\//g, /\^\^/g, /\^/g ];
     function stylesToCssText(styles, preserveComments) {
       var cssText = "";
@@ -4979,6 +5003,8 @@ if (WebComponents.flags.shadow) {
           this._port = base._port;
           this._path = base._path.slice();
           this._query = base._query;
+          this._username = base._username;
+          this._password = base._password;
           break loop;
         } else if ("/" == c || "\\" == c) {
           if ("\\" == c) err("\\ is an invalid code point.");
@@ -4988,6 +5014,8 @@ if (WebComponents.flags.shadow) {
           this._port = base._port;
           this._path = base._path.slice();
           this._query = "?";
+          this._username = base._username;
+          this._password = base._password;
           state = "query";
         } else if ("#" == c) {
           this._host = base._host;
@@ -4995,6 +5023,8 @@ if (WebComponents.flags.shadow) {
           this._path = base._path.slice();
           this._query = base._query;
           this._fragment = "#";
+          this._username = base._username;
+          this._password = base._password;
           state = "fragment";
         } else {
           var nextC = input[cursor + 1];
@@ -5002,6 +5032,8 @@ if (WebComponents.flags.shadow) {
           if ("file" != this._scheme || !ALPHA.test(c) || nextC != ":" && nextC != "|" || EOF != nextNextC && "/" != nextNextC && "\\" != nextNextC && "?" != nextNextC && "#" != nextNextC) {
             this._host = base._host;
             this._port = base._port;
+            this._username = base._username;
+            this._password = base._password;
             this._path = base._path.slice();
             this._path.pop();
           }
@@ -5024,6 +5056,8 @@ if (WebComponents.flags.shadow) {
           if ("file" != this._scheme) {
             this._host = base._host;
             this._port = base._port;
+            this._username = base._username;
+            this._password = base._password;
           }
           state = "relative path";
           continue;
@@ -5994,7 +6028,7 @@ HTMLImports.addModule(function(scope) {
   var IMPORT_SELECTOR = "link[rel=" + IMPORT_LINK_TYPE + "]";
   var importParser = {
     documentSelectors: IMPORT_SELECTOR,
-    importsSelectors: [ IMPORT_SELECTOR, "link[rel=stylesheet]", "style", "script:not([type])", 'script[type="text/javascript"]' ].join(","),
+    importsSelectors: [ IMPORT_SELECTOR, "link[rel=stylesheet]", "style", "script:not([type])", 'script[type="application/javascript"]', 'script[type="text/javascript"]' ].join(","),
     map: {
       link: "parseLink",
       script: "parseScript",
@@ -6130,9 +6164,11 @@ HTMLImports.addModule(function(scope) {
           }
         }
         if (fakeLoad) {
-          elt.dispatchEvent(new CustomEvent("load", {
-            bubbles: false
-          }));
+          setTimeout(function() {
+            elt.dispatchEvent(new CustomEvent("load", {
+              bubbles: false
+            }));
+          });
         }
       }
     },
@@ -6836,6 +6872,12 @@ CustomElements.addModule(function(scope) {
     }
   }
   function createElement(tag, typeExtension) {
+    if (tag) {
+      tag = tag.toLowerCase();
+    }
+    if (typeExtension) {
+      typeExtension = typeExtension.toLowerCase();
+    }
     var definition = getRegisteredDefinition(typeExtension || tag);
     if (definition) {
       if (tag == definition.tag && typeExtension == definition.is) {
