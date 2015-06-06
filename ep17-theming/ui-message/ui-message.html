@@ -53,14 +53,13 @@
       <p class="content">{{message}}</p>
     </div>
   </template>
+  <script>
+    Polymer({
+      is: 'ui-message',
+      properties: {
+        header: String,
+        message: String
+      }
+    });
+  </script>
 </dom-module>
-
-<script>
-  Polymer({
-    is: 'ui-message',
-    properties: {
-      header: String,
-      message: String
-    }
-  });
-</script>
