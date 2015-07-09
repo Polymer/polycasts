@@ -1,0 +1,8 @@
+.container {
+  width: 960px;
+  margin: 100px auto;
+  text-align: center;
+}
+.container > bouncy-button {
+  margin-right: 100px;
+}
