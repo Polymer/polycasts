@@ -10,11 +10,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="../neon-animation/animations/slide-down-animation.html">
-<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
 <link rel="import" href="../neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-down-animation.html">
+<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="bounce-in-animation.html">
 
 <!--
@@ -52,18 +52,45 @@ Example:
   <script>
     Polymer({
       is: 'login-panel',
+      behaviors: [Polymer.NeonAnimationRunnerBehavior],
       properties: {
         opened: {
           type: Boolean
+        },
+        animationConfig: {
+          value: function() {
+            return {
+              'entry': {
+                name: 'bounce-in-animation',
+                node: this,
+                timing: {duration: 1000}
+              },
+              'exit': {
+                name: 'fade-out-animation',
+                node: this
+              }
+            }
+          }
         }
+      },
+      listeners: {
+        'neon-animation-finish': '_onNeonAnimationFinish'
       },
       show: function() {
         this.opened = true;
         this.style.display = 'inline-block';
+        this.cancelAnimation();
+        this.playAnimation('entry');
       },
       hide: function() {
         this.opened = false;
-        this.style.display = 'none';
+        this.cancelAnimation();
+        this.playAnimation('exit');
+      },
+      _onNeonAnimationFinish: function() {
+        if (!this.opened) {
+          this.style.display = 'none';
+        }
       }
     });
   </script>
