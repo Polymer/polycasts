@@ -52,45 +52,18 @@ Example:
   <script>
     Polymer({
       is: 'login-panel',
-      behaviors: [Polymer.NeonAnimationRunnerBehavior],
       properties: {
         opened: {
           type: Boolean
-        },
-        animationConfig: {
-          value: function() {
-            return {
-              'entry': {
-                name: 'bounce-in-animation',
-                node: this,
-              },
-              'exit': {
-                // provided by neon-animation-animations/fade-out-animation.html
-                name: 'fade-out-animation',
-                node: this
-              }
-            };
-          }
         }
-      },
-      listeners: {
-        'neon-animation-finish': '_onNeonAnimationFinish'
       },
       show: function() {
         this.opened = true;
         this.style.display = 'inline-block';
-        this.cancelAnimation();
-        this.playAnimation('entry');
       },
       hide: function() {
         this.opened = false;
-        this.cancelAnimation();
-        this.playAnimation('exit');
-      },
-      _onNeonAnimationFinish: function() {
-        if (!this.opened) {
-          this.style.display = 'none';
-        }
+        this.style.display = 'none';
       }
     });
   </script>
