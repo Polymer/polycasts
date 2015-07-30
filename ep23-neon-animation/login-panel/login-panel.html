@@ -12,7 +12,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../neon-animation/animations/slide-down-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-in-animation.html">
 <link rel="import" href="../neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="bounce-in-animation.html">
 
 <!--
 An element demonstrating neon-animation.
@@ -26,6 +29,9 @@ Example:
   <style>
     :host {
       display: none;
+      font-family: Roboto, Helvetica, Arial, sans-serif;
+      background: #DCEDC8;
+      text-align: left;
     }
     paper-material {
       padding: 16px;
@@ -55,9 +61,8 @@ Example:
           value: function() {
             return {
               'entry': {
-                // provided by neon-animation/animations/scale-up-animation.html
-                name: 'scale-up-animation',
-                node: this
+                name: 'bounce-in-animation',
+                node: this,
               },
               'exit': {
                 // provided by neon-animation-animations/fade-out-animation.html
@@ -74,10 +79,12 @@ Example:
       show: function() {
         this.opened = true;
         this.style.display = 'inline-block';
+        this.cancelAnimation();
         this.playAnimation('entry');
       },
       hide: function() {
         this.opened = false;
+        this.cancelAnimation();
         this.playAnimation('exit');
       },
       _onNeonAnimationFinish: function() {

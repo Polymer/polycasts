@@ -16,17 +16,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../login-panel.html">
     <style media="screen">
-      .login-container {
+      .container {
         text-align: center;
+      }
+      .login-container {
         margin-top: 100px;
       }
     </style>
   </head>
   <body>
 
-    <button type="button" onclick="show()">Open</button>
-    <button type="button" onclick="hide()">Close</button>
-    <div class="login-container">
+    <div class="container button-container">
+      <button type="button" onclick="show()">Open</button>
+      <button type="button" onclick="hide()">Close</button>
+    </div>
+    <div class="container login-container">
       <login-panel></login-panel>
     </div>
 
