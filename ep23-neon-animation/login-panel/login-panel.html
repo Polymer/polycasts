@@ -1,0 +1,90 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../neon-animation/animations/fade-out-animation.html">
+
+<!--
+An element demonstrating neon-animation.
+Example:
+    <login-panel></login-panel>
+@element login-panel
+@demo demo/index.html
+-->
+
+<dom-module id="login-panel">
+  <style>
+    :host {
+      display: none;
+    }
+    paper-material {
+      padding: 16px;
+      width: 300px;
+    }
+  </style>
+  <template>
+    <paper-material elevation="1">
+      <h2>Sign In</h2>
+      <div>
+        <paper-input label="Username"></paper-input>
+      </div>
+      <div>
+        <paper-input label="Password"></paper-input>
+      </div>
+    </paper-material>
+  </template>
+  <script>
+    Polymer({
+      is: 'login-panel',
+      behaviors: [Polymer.NeonAnimationRunnerBehavior],
+      properties: {
+        opened: {
+          type: Boolean
+        },
+        animationConfig: {
+          value: function() {
+            return {
+              'entry': {
+                // provided by neon-animation/animations/scale-up-animation.html
+                name: 'scale-up-animation',
+                node: this
+              },
+              'exit': {
+                // provided by neon-animation-animations/fade-out-animation.html
+                name: 'fade-out-animation',
+                node: this
+              }
+            };
+          }
+        }
+      },
+      listeners: {
+        'neon-animation-finish': '_onNeonAnimationFinish'
+      },
+      show: function() {
+        this.opened = true;
+        this.style.display = 'inline-block';
+        this.playAnimation('entry');
+      },
+      hide: function() {
+        this.opened = false;
+        this.playAnimation('exit');
+      },
+      _onNeonAnimationFinish: function() {
+        if (!this.opened) {
+          this.style.display = 'none';
+        }
+      }
+    });
+  </script>
+</dom-module>
