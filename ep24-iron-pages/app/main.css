@@ -1,0 +1,15 @@
+body {
+  padding-top: 100px;
+}
+
+h1 {
+  font-family: "Lato", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  color: #E91E63;
+  text-align: center;
+}
+
+cat-alogue {
+  width: 500px;
+  margin: 0 auto;
+}

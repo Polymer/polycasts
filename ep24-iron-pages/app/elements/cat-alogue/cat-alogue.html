@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<dom-module id="cat-alogue">
+  <style>
+    :host {
+      display: block;
+    }
+    img {
+      height: 375px;
+    }
+  </style>
+  <template>
+    <iron-pages id="pages" selected="{{selected}}" attr-for-selected="data-cat">
+      <section data-cat="pretty">
+        <img src="../../images/cat1.jpg" alt="Pretty cat" />
+      </section>
+      <section data-cat="vacation">
+        <img src="../../images/cat2.jpg" alt="Vacation cat" />
+      </section>
+      <section data-cat="hacker">
+        <img src="../../images/cat3.jpg" alt="Hacker cat" />
+      </section>
+    </iron-pages>
+    <div class="controls layout horizontal justified">
+      <button on-tap="_goPrev">Prev</button>
+      <input type="text" value="{{selected::input}}">
+      <button on-tap="_goNext">Next</button>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'cat-alogue',
+      properties: {
+        selected: {
+          type: String,
+          value: 'hacker'
+        }
+      },
+      _goPrev: function() {
+        this.$.pages.selectPrevious();
+      },
+      _goNext: function() {
+        this.$.pages.selectNext();
+      }
+    });
+  </script>
+</dom-module>
