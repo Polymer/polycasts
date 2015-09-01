@@ -101,8 +101,11 @@
 
   <script>
     Polymer({
+
       is: 'list-page',
+
       behaviors: [Polymer.NeonAnimatableBehavior],
+
       properties: {
         animationConfig: {
           value: function() {
@@ -119,9 +122,11 @@
           }
         }
       },
+
       showSettings: function() {
         this.fire('show-settings');
       }
+
     });
   </script>
 
