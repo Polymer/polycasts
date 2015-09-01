@@ -1,0 +1,118 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+
+<dom-module id="detail-page">
+
+  <style>
+
+    :host {
+      display: block;
+      overflow: scroll;
+    }
+
+    #header {
+      height: 150px;
+      background: blue;
+    }
+    .container {
+      background: white;
+    }
+    .content {
+      padding: 56px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 48px;
+    }
+    p {
+      font-size: 20px;
+    }
+    .row {
+      margin: 56px 0;
+    }
+  </style>
+
+  <template>
+    <div>
+      <div id="header"></div>
+      <div class="container">
+        <div class="content">
+          <h1>Oh hai!</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+          <div class="row layout horizontal around-justified">
+            <img src="http://placehold.it/80x80">
+            <img src="http://placehold.it/80x80">
+            <img src="http://placehold.it/80x80">
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <div class="row layout horizontal around-justified">
+            <img src="http://placehold.it/80x80">
+            <img src="http://placehold.it/80x80">
+            <img src="http://placehold.it/80x80">
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'detail-page',
+
+      behaviors: [
+        Polymer.NeonSharedElementAnimatableBehavior
+      ],
+
+      properties: {
+
+        animationConfig: {
+          value: function() {
+            return {
+              'entry': [{
+                name: 'hero-animation',
+                id: 'hero',
+                toPage: this
+              }, {
+                name: 'fade-in-animation',
+                node: this
+              }],
+
+              'exit': {
+                name: 'fade-out-animation',
+                node: this
+              }
+            }
+          }
+        },
+
+        sharedElements: {
+          value: function() {
+            return {
+              'hero': this.$.header
+            }
+          }
+        }
+
+      }
+
+    });
+
+  </script>
+
+</dom-module>

@@ -1,0 +1,200 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-from-right-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-right-animation.html">
+
+<dom-module id="settings-page">
+
+  <style>
+    :host {
+      display: block;
+      font-family: 'Roboto', sans-serif;
+    }
+    .container {
+      background: white;
+    }
+    .content {
+      padding: 56px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .row {
+      margin: 56px 0;
+    }
+    label {
+      font-size: 18px;
+    }
+  </style>
+
+  <template>
+    <paper-header-panel class="flex layout vertical">
+      <paper-toolbar>
+        <div class="title flex">Settings</div>
+        <paper-icon-button icon="cancel" on-tap="showList"></paper-icon-button>
+      </paper-toolbar>
+      <div class="container">
+        <div class="content">
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Reticulate Splines
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Grim the Fandangos
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox">
+              Harvest Tiberium
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Construct More Pylons
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Pertub Matrices
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Compress Simulator Clock
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox">
+              Charge Psychonauts
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Reticulate Splines
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Grim the Fandangos
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox">
+              Harvest Tiberium
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Construct More Pylons
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Pertub Matrices
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Compress Simulator Clock
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox">
+              Charge Psychonauts
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Reticulate Splines
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Grim the Fandangos
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox">
+              Harvest Tiberium
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Construct More Pylons
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Pertub Matrices
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox" checked>
+              Compress Simulator Clock
+            </label>
+          </div>
+          <div class="row">
+            <label>
+              <input type="checkbox">
+              Charge Psychonauts
+            </label>
+          </div>
+        </div>
+      </div>
+    </paper-header-panel>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'settings-page',
+      behaviors: [Polymer.NeonAnimatableBehavior],
+      properties: {
+        animationConfig: {
+          value: function() {
+            return {
+              'entry': {
+                name: 'slide-from-right-animation',
+                node: this
+              },
+              'exit': [{
+                name: 'slide-right-animation',
+                node: this
+              }]
+            }
+          }
+        }
+      },
+      showList: function() {
+        this.fire('show-list');
+      }
+    });
+  </script>
+
+</dom-module>

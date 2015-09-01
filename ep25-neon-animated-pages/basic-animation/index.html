@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Neon Animated Page Demo</title>
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Web Components -->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+    <link rel="import" href="bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="elements/list-page/list-page.html">
+    <link rel="import" href="elements/settings-page/settings-page.html">
+
+    <style>
+      body {
+        background: #222;
+      }
+      neon-animated-pages {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body class="fullbleed layout vertical" unresolved>
+
+    <template is="dom-bind" id="app">
+      <neon-animated-pages id="pages" class="layout vertical flex" selected="[[selected]]">
+        <list-page class="flex"></list-page>
+        <settings-page class="flex"></settings-page>
+      </neon-animated-pages>
+    </template>
+
+    <script>
+      var app = document.querySelector('#app');
+
+      app.selected = 0;
+
+      document.addEventListener('show-settings', function() {
+        app.selected = 1;
+      });
+
+      document.addEventListener('show-list', function() {
+        app.selected = 0;
+      });
+    </script>
+
+  </body>
+</html>

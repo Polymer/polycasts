@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Neon Animated Page Demo</title>
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Web Components -->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+    <link rel="import" href="bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="bower_components/neon-animation/animations/scale-up-animation.html">
+    <link rel="import" href="bower_components/neon-animation/animations/fade-out-animation.html">
+
+    <style>
+      neon-animated-pages {
+        overflow: hidden;
+      }
+      color-page:nth-of-type(1) {
+        background: #0085FF;
+      }
+      color-page:nth-of-type(2) {
+        background: #FF0011;
+      }
+      color-page:nth-of-type(3) {
+        background: #FFB600;
+      }
+      color-page:nth-of-type(4) {
+        background: #00B745;
+      }
+    </style>
+  </head>
+
+  <body class="fullbleed layout vertical" unresolved>
+
+    <template is="dom-bind" id="app">
+      <neon-animated-pages class="flex" selected="[[selected]]" entry-animation="scale-up-animation" exit-animation="fade-out-animation" on-tap="next">
+        <color-page></color-page>
+        <color-page></color-page>
+        <color-page></color-page>
+        <color-page></color-page>
+      </neon-animated-pages>
+    </template>
+
+    <script>
+      var app = document.querySelector('#app');
+      app.selected = 0;
+      app.next = function() {
+        this.selected = this.selected === 3 ? 0 : this.selected + 1;
+      };
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
+<dom-module id="main-page">
+
+  <style>
+
+    :host {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+    }
+
+    #circle {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 50px;
+      height: 50px;
+      margin: 16px;
+      border-radius: 50%;
+      background: blue;
+    }
+
+    .sign-in {
+      font-size: 36px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: lighter;
+    }
+  </style>
+
+  <template>
+
+    <div id="circle"></div>
+    <div class="sign-in">Sign In</div>
+
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+
+    is: 'main-page',
+
+    behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
+
+    properties: {
+
+      animationConfig: {
+        value: function() {
+          return {
+            'entry': {
+              name: 'scale-up-animation',
+              node: this
+            },
+
+            'exit': [{
+              name: 'hero-animation',
+              id: 'hero',
+              fromPage: this
+            }, {
+              name: 'fade-out-animation',
+              node: this
+            }]
+          };
+        }
+      },
+
+      sharedElements: {
+        value: function() {
+          return {
+            'hero': this.$.circle
+          }
+        }
+      }
+    }
+
+  });
+
+</script>
