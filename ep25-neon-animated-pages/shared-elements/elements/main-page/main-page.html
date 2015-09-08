@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
 <link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
@@ -48,7 +49,6 @@
     behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
 
     properties: {
-
       animationConfig: {
         value: function() {
           return {
@@ -56,7 +56,6 @@
               name: 'scale-up-animation',
               node: this
             },
-
             'exit': [{
               name: 'hero-animation',
               id: 'hero',
@@ -65,7 +64,7 @@
               name: 'fade-out-animation',
               node: this
             }]
-          };
+          }
         }
       },
 

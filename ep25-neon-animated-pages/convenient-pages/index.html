@@ -37,7 +37,11 @@
   <body class="fullbleed layout vertical" unresolved>
 
     <template is="dom-bind" id="app">
-      <neon-animated-pages class="flex" selected="[[selected]]" entry-animation="scale-up-animation" exit-animation="fade-out-animation" on-tap="next">
+      <neon-animated-pages class="flex"
+                           selected="[[selected]]"
+                           on-tap="next"
+                           entry-animation="scale-up-animation"
+                           exit-animation="fade-out-animation">
         <color-page></color-page>
         <color-page></color-page>
         <color-page></color-page>

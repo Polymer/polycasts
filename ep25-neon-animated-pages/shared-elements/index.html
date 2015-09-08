@@ -28,7 +28,7 @@
   <body class="fullbleed layout vertical" unresolved>
 
     <template is="dom-bind" id="app">
-      <neon-animated-pages id="pages" class="flex" selected="[[selected]]" on-tap="next">
+      <neon-animated-pages class="flex" selected="[[selected]]" on-tap="next">
         <main-page></main-page>
         <detail-page></detail-page>
       </neon-animated-pages>
@@ -40,16 +40,10 @@
       app.selected = 0;
 
       app.next = function() {
-        app.selected++;
+        if (app.selected === 0) {
+          app.selected = 1;
+        }
       };
-
-      document.addEventListener('show-settings', function() {
-        app.selected = 1;
-      });
-
-      document.addEventListener('show-list', function() {
-        app.selected = 0;
-      });
     </script>
 
   </body>
