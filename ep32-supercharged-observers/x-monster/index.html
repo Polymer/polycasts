@@ -1,0 +1,58 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <link href="http://polygit.org/components/polymer/polymer.html" rel="import">
+</head>
+<body>
+
+  <style media="screen">
+      body {
+        text-align: center;
+      }
+  </style>
+
+  <dom-module id="x-monster">
+    <template>
+      <style>
+        :host {
+          display: inline-block;
+          font-family: Roboto;
+          font-weight: bold;
+          text-align: center;
+          font-size: 30px;
+        }
+        div {
+          margin-top: -90px;
+        }
+      </style>
+      <img src="monster.png" width="300">
+      <div><span>{{critter}}</span> by: <span>{{blurb}}</span></div>
+    </template>
+    <script>
+    Polymer({
+      is: 'x-monster',
+      properties: {
+        bio: {
+          type: Object,
+          value: function() {
+            return { name: 'Monster', maker: 'Dr. Frankenstein' };
+          }
+        }
+      },
+      observers: [
+        'bioChanged(bio.*)'
+      ],
+      bioChanged: function(changeRecord) {
+        if (changeRecord.path == 'bio.maker') {
+          this.blurb = this.bio.maker;
+        } else if (changeRecord.path == 'bio.name') {
+          this.critter = this.bio.name;
+        }
+      }
+    });
+    </script>
+  </dom-module>
+
+  <x-monster></x-monster>
+
+</body>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DocPrefHorizontalScrollBarValue</key>
+	<string>0</string>
+	<key>DocPrefIsCaptionEditorOpen</key>
+	<integer>0</integer>
+	<key>DocPrefIsPropertiesOpen</key>
+	<integer>0</integer>
+	<key>DocPrefIsTocOpen</key>
+	<integer>0</integer>
+	<key>DocPrefMainSplitterValue</key>
+	<string>612.00000000000000000000</string>
+	<key>DocPrefPlayheadTime</key>
+	<string>0</string>
+	<key>DocPrefPreviewScaleValue</key>
+	<string>1.00000000000000000000</string>
+	<key>DocPrefTrackHeights</key>
+	<array>
+		<integer>54</integer>
+		<integer>54</integer>
+		<integer>54</integer>
+	</array>
+	<key>DocPrefWindowSizePos</key>
+	<string>4 0 1436 877 0 0 2560 1577 </string>
+	<key>DocPrefZoomValue</key>
+	<string>0.49885719283857371531</string>
+	<key>SaveAsStandaloneProject</key>
+	<real>1</real>
+</dict>
+</plist>
