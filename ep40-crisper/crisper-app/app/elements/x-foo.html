@@ -1,0 +1,15 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="x-foo">
+  <template>
+    <p>Hello from x-foo!</p>
+  </template>
+  <script>
+    Polymer({
+      is: 'x-foo',
+      attached: function() {
+        console.log('im attached!');
+      }
+    });
+  </script>
+</dom-module>
