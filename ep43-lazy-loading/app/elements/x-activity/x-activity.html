@@ -1,0 +1,63 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="x-activity">
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .status-feed {
+        margin: 32px 152px;
+      }
+
+      .friend-card {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        margin-bottom: 16px;
+      }
+
+      img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 16px;
+      }
+
+      .friend-quote {
+        font-style: italic;
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="/data/contacts.json"
+      handle-as="json"
+      last-response="{{contacts}}"></iron-ajax>
+
+    <div class="status-feed">
+
+      <template is="dom-repeat" items="[[contacts]]" as="contact">
+        <div class="friend-card">
+          <img src="/images/avatar.png" alt="A profile photo of Rob Dodson" />
+          <p class="friend-quote">"[[contact.mediumText]]"</p>
+        </div>
+      </template>
+
+    </div>
+
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'x-activity'
+
+    });
+  </script>
+</dom-module>

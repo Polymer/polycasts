@@ -1,0 +1,60 @@
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="x-browse">
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      paper-card {
+        width: 350px;
+        min-height: 333px;
+        max-height: 333px;
+        text-overflow: ellipsis;
+        margin: 13px;
+      }
+    </style>
+
+    <template is="dom-repeat" items="[[restaurants]]">
+      <paper-card image="http://lorempixel.com/350/150/food/[[index]]">
+        <div class="card-content">
+          [[item]] ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
+        </div>
+        <div class="card-actions">
+          <paper-button>Share</paper-button>
+          <paper-button>Explore!</paper-button>
+        </div>
+      </paper-card>
+    </template>
+
+  </template>
+  <script>
+    Polymer({
+
+      is: 'x-browse',
+
+      properties: {
+        restaurants: {
+          type: Array,
+          value: function() {
+            return [
+              'Cafe Basilico',
+              'Yum Deli',
+              'Foodwizard',
+              'Sammich',
+              'Meat Liquor',
+              'Lobster Dude',
+              'Clams and Stuff',
+              'Pizza Doge',
+              'Chiliweasel'
+            ];
+          }
+        }
+      }
+
+    });
+  </script>
+</dom-module>

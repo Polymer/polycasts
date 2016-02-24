@@ -1,0 +1,141 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../x-router/x-router.html">
+
+<dom-module id="x-app">
+  <template>
+
+    <style>
+      :host {
+        display: flex;
+        font-family: Roboto, Helvetica, sans-serif;
+      }
+
+      nav {
+        padding-top: 128px;
+        width: 288px;
+        background: #404040;
+      }
+
+      nav a {
+        color: white;
+        padding: 12px 16px;
+        display: block;
+        font-size: 20px;
+        font-weight: 500;
+        text-decoration: none;
+      }
+
+      nav .iron-selected {
+        background: #888;
+      }
+
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+
+      header {
+        font-size: 60px;
+        font-weight: bold;
+        color: #444;
+        text-align: center;
+        box-sizing: border-box;
+        padding-top: 30px;
+        min-height: 130px;
+        height: 130px;
+        background: #fff;
+        border-bottom: 1px solid #ddd;
+      }
+
+      main {
+        background: #fafafa;
+        flex: 1;
+        overflow: scroll;
+      }
+    </style>
+
+    <nav>
+      <iron-selector selected="[[selected]]" attr-for-selected="data-page">
+        <a href="/browse" data-page="browse">Browse</a>
+        <a href="/activity" data-page="activity">Activity</a>
+      </iron-selector>
+    </nav>
+
+    <div class="wrapper">
+
+      <header>
+        POLYMEAL
+      </header>
+
+      <main>
+
+        <iron-pages selected="[[selected]]" attr-for-selected="data-page">
+          <section data-page="browse">
+            <x-browse id="browse"></x-browse>
+          </section>
+          <section data-page="activity">
+            <x-activity id="activity"></x-activity>
+          </section>
+        </iron-pages>
+
+      </main>
+
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'x-app',
+
+      ready: function() {
+
+        // Setup some basic routing
+        page('/', () => {
+          page.redirect('/browse');
+        });
+
+        page('/browse', () => {
+          if (Polymer.isInstance(this.$.browse)) {
+            this.selected = 'browse';
+            return;
+          }
+
+          Polymer.Base.importHref(
+            '/elements/x-browse/x-browse.html', () => {
+              this.selected = 'browse';
+            }, () => {
+              console.log('Something failed!');
+            }, true
+          );
+        });
+
+        page('/activity', () => {
+          if (Polymer.isInstance(this.$.activity)) {
+            this.selected = 'activity';
+            return;
+          }
+
+          Polymer.Base.importHref(
+            '/elements/x-activity/x-activity.html', () => {
+              this.selected = 'activity';
+            }, () => {
+              console.log('Something failed!');
+            }, true
+          );
+        });
+
+        page({
+          hashbang: true
+        });
+
+      }
+
+    });
+  </script>
+
+</dom-module>

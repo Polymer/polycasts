@@ -1,0 +1,27 @@
+{
+  "name": "app",
+  "homepage": "https://github.com/robdodson/polycasts",
+  "authors": [
+    "Rob Dodson <robdodson@google.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~1.3.0",
+    "page": "visionmedia/page.js#~1.6.4",
+    "iron-pages": "PolymerElements/iron-pages#~1.0.7",
+    "paper-card": "PolymerElements/paper-card#~1.1.1",
+    "paper-button": "PolymerElements/paper-button#~1.0.11",
+    "iron-ajax": "PolymerElements/iron-ajax#~1.1.1",
+    "iron-selector": "PolymerElements/iron-selector#~1.2.4"
+  }
+}
