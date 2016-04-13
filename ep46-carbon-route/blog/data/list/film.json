@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "title": "Fourth Post",
+      "slug": "fourth-post",
+      "img": "post4-small.jpg",
+      "img_alt": "The fourth post image"
+    },
+    {
+      "title": "Fifth Post",
+      "slug": "fifth-post",
+      "img": "post5-small.jpg",
+      "img_alt": "The fifth post image"
+    },
+    {
+      "title": "Sixth Post",
+      "slug": "sixth-post",
+      "img": "post6-small.jpg",
+      "img_alt": "The sixth post image"
+    }
+  ]
+}

@@ -3,8 +3,20 @@
     {
       "title": "First Post",
       "slug": "first-post",
-      "img": "first-post-small.jpg",
+      "img": "images/post1-large.jpeg",
       "img_alt": "The first post image"
+    },
+    {
+      "title": "Second Post",
+      "slug": "second-post",
+      "img": "images/post2-large.jpeg",
+      "img_alt": "The second post image"
+    },
+    {
+      "title": "Third Post",
+      "slug": "third-post",
+      "img": "images/post3-large.jpeg",
+      "img_alt": "The third post image"
     }
   ]
 }

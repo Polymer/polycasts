@@ -24,15 +24,11 @@
                   active="{{postsActive}}"
                   data="{{postsData}}"></carbon-route>
 
-    <h1>My Amazing Blog</h1>
+    <list-page category="{{category}}"
+               active={{listActive}}></list-page>
 
-    <list-page data-page="list"
-               category="{{category}}"
-               hidden$={{!listActive}}></list-page>
-
-    <post-page data-page="post"
-               post="{{postsData.slug}}"
-               hidden$="{{!postsActive}}"></post-page>
+    <post-page post="{{postsData.slug}}"
+               active="{{postsActive}}"></post-page>
 
   </template>
 

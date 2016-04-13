@@ -6,27 +6,25 @@
 
     <style>
       :host {
-        display: block;
+        display: none;
       }
 
-      :host([hidden]) {
-        display: none;
+      :host([active]) {
+        display: block;
       }
     </style>
 
     <iron-ajax
       auto
-      url="data/list/[[category]].json"
+      url="[[_computeURL(category)]]"
       handle-as="json"
       last-response="{{postList}}"></iron-ajax>
 
-    <h2>I'm listing [[category]]</h2>
-
-    <template is="dom-repeat" items="[[postList.posts]]" as="post">
+    <template is="dom-repeat" items="{{postList.posts}}">
       <div class="post">
-        <img src="[[post.img]]" alt="[[post.img_alt]]" />
-        <a href="#/[[category]]/posts/[[post.slug]]">
-          <h2>[[post.title]]</h2>
+        <img src="[[item.img]]" alt="[[item.img_alt]]" />
+        <a href="#/[[category]]/posts/[[item.slug]]">
+          <h2>[[item.title]]</h2>
         </a>
       </div>
     </template>
@@ -36,7 +34,21 @@
   <script>
     Polymer({
 
-      is: 'list-page'
+      is: 'list-page',
+
+      properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+
+      },
+
+      _computeURL: function(category) {
+        return `data/list/${category}.json`;
+      }
 
     });
   </script>

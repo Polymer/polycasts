@@ -6,28 +6,42 @@
 
     <style>
       :host {
-        display: block;
+        display: none;
       }
 
-      :host([hidden]) {
-        display: none;
+      :host([active]) {
+        display: block;
       }
     </style>
 
     <iron-ajax
       auto
-      url="posts/[[slug]].json"
+      url="[[_computeURL(post)]]"
       handle-as="json"
-      last-response="{{post}}"></iron-ajax>
+      last-response="{{postContent}}"></iron-ajax>
 
-    <h2>I'm posting [[slug]]</h2>
+    <p>[[postContent.text]]</p>
 
   </template>
 
   <script>
     Polymer({
 
-      is: 'post-page'
+      is: 'post-page',
+
+      properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+
+      },
+
+      _computeURL: function(post) {
+        return `data/posts/${post}.json`;
+      }
 
     });
   </script>
