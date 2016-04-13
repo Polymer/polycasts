@@ -72,10 +72,18 @@
 
       is: 'blog-app',
 
+      observers: [
+        '_updateScroll(route)'
+      ],
+
       attached: function() {
         if (!this.route.path) {
           this.set('route.path', '/art/list');
         }
+      },
+
+      _updateScroll: function() {
+        window.scroll(0, 0);
       }
 
     });
