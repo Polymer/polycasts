@@ -12,6 +12,21 @@
       :host([active]) {
         display: block;
       }
+
+      .post {
+        position: relative;
+        margin-bottom: 160px;
+      }
+
+      .post a {
+        display: block;
+        text-decoration: none;
+        color: #212121;
+      }
+
+      p {
+        line-height: 33.18px;
+      }
     </style>
 
     <iron-ajax
@@ -22,9 +37,10 @@
 
     <template is="dom-repeat" items="{{postList.posts}}">
       <div class="post">
-        <img src="[[item.img]]" alt="[[item.img_alt]]" />
         <a href="#/[[category]]/posts/[[item.slug]]">
+          <img src="[[item.img]]" alt="[[item.img_alt]]" />
           <h2>[[item.title]]</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </a>
       </div>
     </template>

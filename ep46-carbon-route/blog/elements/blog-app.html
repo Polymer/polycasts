@@ -14,9 +14,32 @@
         display: block;
       }
 
+      a {
+        color: black;
+        text-decoration: none;
+        margin-right: 8px;
+        font-size: 18px;
+      }
+
       .iron-selected {
-        background: tomato;
-        color: white;
+        text-decoration: underline;
+      }
+
+      nav {
+        height: 65px;
+        margin: 0 auto;
+        text-align: right;
+      }
+
+      main {
+        width: 900px;
+        margin: 0 auto;
+        font-size: 21px;
+        font-family: Georgia;
+      }
+
+      h2 {
+        font-family: sans-serif;
       }
     </style>
 
@@ -32,7 +55,7 @@
       <iron-selector selected="{{categoryData.category}}" attr-for-selected="data-page">
         <a data-page="art" href="#/art/list">Art</a>
         <a data-page="film" href="#/film/list">Film</a>
-        <a data-page="design" href="#/design/list">Design</a>
+        <a data-page="photo" href="#/photo/list">Photo</a>
       </iron-selector>
     </nav>
 

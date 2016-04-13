@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "title": "The Photo That Changed Everything",
+      "slug": "seventh-post",
+      "img": "images/post7.jpeg",
+      "img_alt": "The seventh post image"
+    },
+    {
+      "title": "Ringing the Changes at Vantage",
+      "slug": "eighth-post",
+      "img": "images/post8.jpeg",
+      "img_alt": "The fifth post image"
+    },
+    {
+      "title": "How To Run a User-Centred Photoshoot",
+      "slug": "ninth-post",
+      "img": "images/post9.jpeg",
+      "img_alt": "The sixth post image"
+    }
+  ]
+}

@@ -1,21 +1,21 @@
 {
   "posts": [
     {
-      "title": "Fourth Post",
+      "title": "A Look Back: “Nebraska",
       "slug": "fourth-post",
-      "img": "post4-small.jpg",
+      "img": "images/post4.jpeg",
       "img_alt": "The fourth post image"
     },
     {
-      "title": "Fifth Post",
+      "title": "How Screenwriters Are Ruining The Planet",
       "slug": "fifth-post",
-      "img": "post5-small.jpg",
+      "img": "images/post5.jpeg",
       "img_alt": "The fifth post image"
     },
     {
-      "title": "Sixth Post",
+      "title": "Noritsu vs Pakon",
       "slug": "sixth-post",
-      "img": "post6-small.jpg",
+      "img": "images/post6.jpeg",
       "img_alt": "The sixth post image"
     }
   ]
