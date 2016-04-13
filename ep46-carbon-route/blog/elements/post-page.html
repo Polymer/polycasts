@@ -1,0 +1,35 @@
+<link rel="import" href="../../iron-ajax/iron-ajax.html">
+
+<dom-module id="post-page">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      :host([hidden]) {
+        display: none;
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="posts/[[slug]].json"
+      handle-as="json"
+      last-response="{{post}}"></iron-ajax>
+
+    <h2>I'm posting [[slug]]</h2>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'post-page'
+
+    });
+  </script>
+
+</dom-module>

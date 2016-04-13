@@ -1,0 +1,10 @@
+{
+  "posts": [
+    {
+      "title": "First Post",
+      "slug": "first-post",
+      "img": "first-post-small.jpg",
+      "img_alt": "The first post image"
+    }
+  ]
+}

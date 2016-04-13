@@ -1,0 +1,61 @@
+<link rel="import" href="../../carbon-route/carbon-location.html">
+<link rel="import" href="../../carbon-route/carbon-route.html">
+
+<link rel="import" href="../../iron-selector/iron-selector.html">
+
+<link rel="import" href="blog-pages.html">
+
+<dom-module id="blog-app">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .iron-selected {
+        background: tomato;
+        color: white;
+      }
+    </style>
+
+    <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
+
+    <carbon-route route="{{route}}"
+                  pattern="/:category"
+                  data="{{categoryData}}"
+                  tail="{{categoryTail}}"></carbon-route>
+
+    <nav class="sidebar">
+      <!-- nav menu -->
+      <iron-selector selected="{{categoryData.category}}" attr-for-selected="data-page">
+        <a data-page="art" href="#/art/list">Art</a>
+        <a data-page="film" href="#/film/list">Film</a>
+        <a data-page="design" href="#/design/list">Design</a>
+      </iron-selector>
+    </nav>
+
+    <main>
+      <blog-pages route="{{categoryTail}}"
+                  category="{{categoryData.category}}"></blog-pages>
+    </main>
+
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-app',
+
+      attached: function() {
+        if (!this.route.path) {
+          this.set('route.path', '/art/list');
+        }
+      }
+
+    });
+  </script>
+
+</dom-module>

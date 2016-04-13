@@ -1,0 +1,47 @@
+<link rel="import" href="../../carbon-route/carbon-route.html">
+
+<link rel="import" href="../../iron-pages/iron-pages.html">
+
+<link rel="import" href="list-page.html">
+<link rel="import" href="post-page.html">
+
+<dom-module id="blog-pages">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <carbon-route route="{{route}}"
+                  pattern="/list"
+                  active="{{listActive}}"></carbon-route>
+
+    <carbon-route route="{{route}}"
+                  pattern="/posts/:slug"
+                  active="{{postsActive}}"
+                  data="{{postsData}}"></carbon-route>
+
+    <h1>My Amazing Blog</h1>
+
+    <list-page data-page="list"
+               category="{{category}}"
+               hidden$={{!listActive}}></list-page>
+
+    <post-page data-page="post"
+               post="{{postsData.slug}}"
+               hidden$="{{!postsActive}}"></post-page>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-pages'
+
+    });
+  </script>
+
+</dom-module>

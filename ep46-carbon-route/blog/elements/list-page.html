@@ -1,0 +1,44 @@
+<link rel="import" href="../../iron-ajax/iron-ajax.html">
+
+<dom-module id="list-page">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      :host([hidden]) {
+        display: none;
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="data/list/[[category]].json"
+      handle-as="json"
+      last-response="{{postList}}"></iron-ajax>
+
+    <h2>I'm listing [[category]]</h2>
+
+    <template is="dom-repeat" items="[[postList.posts]]" as="post">
+      <div class="post">
+        <img src="[[post.img]]" alt="[[post.img_alt]]" />
+        <a href="#/[[category]]/posts/[[post.slug]]">
+          <h2>[[post.title]]</h2>
+        </a>
+      </div>
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'list-page'
+
+    });
+  </script>
+
+</dom-module>

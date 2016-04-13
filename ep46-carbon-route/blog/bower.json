@@ -1,0 +1,22 @@
+{
+  "name": "blog",
+  "homepage": "https://github.com/robdodson/polycasts",
+  "authors": [
+    "Rob Dodson <robdodson@google.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "carbon-route": "PolymerElements/carbon-route#~0.8.4",
+    "iron-elements": "PolymerElements/iron-elements#~1.0.9"
+  }
+}
