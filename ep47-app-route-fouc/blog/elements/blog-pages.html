@@ -1,0 +1,60 @@
+<link rel="import" href="/bower_components/app-route/app-route.html">
+
+<link rel="import" href="list-page.html">
+<link rel="import" href="post-page.html">
+
+<dom-module id="blog-pages">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #FFF;
+      }
+    </style>
+
+    <app-route route="{{route}}"
+               pattern="/list"
+               active="{{listActive}}"></app-route>
+
+    <app-route route="{{route}}"
+               pattern="/posts/:slug"
+               active="{{postsActive}}"
+               data="{{postsData}}"></app-route>
+
+    <list-page category="{{category}}"
+               active={{listActive}}
+               loading="{{isLoading}}"></list-page>
+
+    <post-page post="{{postsData.slug}}"
+               active="{{postsActive}}"
+               loading="{{isLoading}}"></post-page>
+
+    <div class="overlay" hidden$="[[!isLoading]]">
+      <paper-spinner active="[[isLoading]]"></paper-spinner>
+    </div>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-pages'
+
+    });
+  </script>
+
+</dom-module>

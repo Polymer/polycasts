@@ -1,0 +1,93 @@
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+
+<link rel="import" href="/bower_components/iron-selector/iron-selector.html">
+
+<link rel="import" href="blog-pages.html">
+
+<dom-module id="blog-app">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
+        margin-right: 8px;
+        font-size: 18px;
+      }
+
+      .iron-selected {
+        text-decoration: underline;
+      }
+
+      nav {
+        height: 65px;
+        margin: 0 auto;
+        text-align: right;
+      }
+
+      main {
+        width: 900px;
+        margin: 0 auto;
+        font-size: 21px;
+        font-family: Georgia;
+      }
+
+      h2 {
+        font-family: sans-serif;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+
+    <app-route route="{{route}}"
+                  pattern="/:category"
+                  data="{{categoryData}}"
+                  tail="{{categoryTail}}"></app-route>
+
+    <nav>
+      <!-- nav menu -->
+      <!-- make sure this is a one way binding or wacky things will happen -->
+      <iron-selector selected="[[categoryData.category]]" attr-for-selected="data-page">
+        <a data-page="art" href="#/art/list">Art</a>
+        <a data-page="film" href="#/film/list">Film</a>
+        <a data-page="photo" href="#/photo/list">Photo</a>
+      </iron-selector>
+    </nav>
+
+    <main>
+      <blog-pages route="{{categoryTail}}"
+                  category="{{categoryData.category}}"></blog-pages>
+    </main>
+
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'blog-app',
+
+      observers: [
+        '_updateScroll(route)'
+      ],
+
+      attached: function() {
+        if (!this.route.path) {
+          this.set('route.path', '/art/list');
+        }
+      },
+
+      _updateScroll: function() {
+        window.scroll(0, 0);
+      }
+
+    });
+  </script>
+
+</dom-module>

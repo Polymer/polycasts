@@ -1,0 +1,69 @@
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/iron-image/iron-image.html">
+
+<dom-module id="post-page">
+
+  <template>
+
+    <style>
+      :host {
+        display: none;
+      }
+
+      :host([active]) {
+        display: block;
+      }
+
+      p {
+        line-height: 33.18px;
+        white-space: pre-wrap;
+      }
+    </style>
+
+    <iron-ajax
+      auto
+      url="[[_computeURL(post)]]"
+      handle-as="json"
+      loading="{{loading}}"
+      last-response="{{postContent}}"></iron-ajax>
+
+    <article>
+      <h2>[[postContent.title]]</h2>
+      <p>[[postContent.intro_text]]</p>
+      <iron-image style="width:900px; height:512px;" placeholder="[[postContent.img_placeholder]]"
+                  sizing="cover" preload fade src="[[postContent.img]]"
+                  alt="[[postContent.img_alt]]"></iron-image>
+      <p>[[postContent.body_text]]</p>
+    </article>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'post-page',
+
+      properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        },
+
+        loading: {
+          type: Boolean,
+          value: false,
+          notify: true
+        }
+
+      },
+
+      _computeURL: function(post) {
+        return `data/posts/${post}.json`;
+      }
+
+    });
+  </script>
+
+</dom-module>
