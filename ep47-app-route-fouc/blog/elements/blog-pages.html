@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
 
 <link rel="import" href="list-page.html">
 <link rel="import" href="post-page.html">
@@ -52,7 +53,15 @@
   <script>
     Polymer({
 
-      is: 'blog-pages'
+      is: 'blog-pages',
+
+      observers: [
+        '_log(isLoading)'
+      ],
+
+      _log: function(isLoading) {
+        console.log('isLoading?', isLoading);
+      }
 
     });
   </script>
