@@ -53,7 +53,19 @@
   <script>
     Polymer({
 
-      is: 'blog-pages'
+      is: 'blog-pages',
+
+      observers: [
+        '_lockScroll(isLoading)'
+      ],
+
+      _lockScroll: function(isLoading) {
+        if (isLoading) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = 'visible';
+        }
+      }
 
     });
   </script>
