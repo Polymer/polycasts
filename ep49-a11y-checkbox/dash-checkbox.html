@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+
+<dom-module id="dash-checkbox">
+  <template>
+    <style>
+      :host {
+        display: inline-block;
+        border: 2px solid black;
+        width: 20px;
+        height: 20px;
+      }
+
+      :host([aria-checked="true"]) {
+        background: no-repeat center/120% url('ic_done_black_24px.svg');
+      }
+    </style>
+  </template>
+  <script>
+    Polymer({
+      is: 'dash-checkbox',
+      hostAttributes: {
+        role: 'checkbox',
+        tabindex: 0
+      },
+      behaviors: [Polymer.IronA11yKeysBehavior],
+      properties: {
+        checked: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true,
+          observer: '_checkedChanged'
+        }
+      },
+      listeners: {
+        'tap': '_onTap'
+      },
+      keyBindings: {
+        'enter': '_onTap',
+        'space': '_onTap'
+      },
+      _checkedChanged: function() {
+        this.setAttribute('aria-checked', this.checked);
+      },
+      _onTap: function() {
+        this.checked = !this.checked;
+      }
+    });
+  </script>
+</dom-module>
