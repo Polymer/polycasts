@@ -6,15 +6,31 @@
     <style>
       :host {
         display: inline-block;
+      }
+
+      #checkboxContainer {
         border: 2px solid black;
         width: 20px;
         height: 20px;
+        margin-right: 8px;
       }
 
-      :host([aria-checked="true"]) {
+      :host([aria-checked="true"]) #checkboxContainer {
         background: no-repeat center/120% url('ic_done_black_24px.svg');
       }
+
+      #checkboxLabel {
+        font-size: 20px;
+      }
+
+      #checkboxLabel,
+      #checkboxContainer {
+        display: inline-block;
+        vertical-align: middle;
+      }
     </style>
+    <div id="checkboxContainer"></div>
+    <div id="checkboxLabel"><content></content></div>
   </template>
   <script>
     Polymer({
