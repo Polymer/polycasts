@@ -1,0 +1,14 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /Users/robdodson/.nvm/versions/node/v6.3.0/bin/node /Users/robdodson/.nvm/versions/node/v6.3.0/bin/firebase serve
+[debug] CLI Version:  3.0.8
+[debug] Platform:     darwin
+[debug] Node Version: v6.3.0
+[debug] Time:         Tue Nov 01 2016 14:33:55 GMT-0700 (PDT)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[info] Starting Firebase development server...
+[info] 
+[info] Project Directory: /Users/robdodson/Desktop/fire-demo
+[info] Public Directory: public
+[info] 
+[info] Server listening at: http://localhost:5000
