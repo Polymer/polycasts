@@ -1,0 +1,98 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="bower_components/polymerfire/firebase-query.html">
+<link rel="import" href="bower_components/paper-input/paper-input.html">
+<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="my-notes">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      #create {
+        width: 100%;
+      }
+
+      #notes-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #notes-list li {
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
+
+      #notes-list .content {
+        @apply(--layout-flex);
+        padding: 8px;
+      }
+
+      #notes-controls {
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
+    </style>
+
+    <div class="card">
+      <firebase-auth user="{{user}}"></firebase-auth>
+      <firebase-query
+        id="query"
+        path="/users/[[user.uid]]/notes"
+        data="{{notes}}">
+      </firebase-query>
+
+      <div id="notes" hidden$="[[!user]]">
+        <ul id="notes-list">
+          <template is="dom-repeat" items="[[notes]]" as="note">
+            <li>
+              <p class="content">[[note.content]]</p>
+              <paper-icon-button icon="clear" note="[[note]]" on-tap="remove"></paper-icon-button>
+            </li>
+          </template>
+        </ul>
+        <paper-input id="input" label="Take a note..."></paper-input>
+        <div id="notes-controls">
+          <paper-button id="add" on-tap="add">Add</paper-button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-notes',
+      properties: {
+        notes: {
+          type: Object
+        }
+      },
+      add: function() {
+        this.$.query.ref.push({
+          content: this.$.input.value
+        });
+        this.$.input.value = null;
+      },
+      remove: function(e) {
+        var key = e.currentTarget.note.$key;
+        this.$.query.ref.child(key).remove();
+      }
+    });
+  </script>
+</dom-module>
