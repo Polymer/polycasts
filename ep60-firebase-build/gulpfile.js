@@ -13,13 +13,13 @@
 // Documentation on what goes into PolymerProject.
 const path = require('path');
 const gulp = require('gulp');
+const mergeStream = require('merge-stream');
+const del = require('del');
 const polymerJsonPath = path.join(process.cwd(), 'polymer.json');
 const polymerJSON = require(polymerJsonPath);
 const polymer = require('polymer-build');
 const polymerProject = new polymer.PolymerProject(polymerJSON);
-const mergeStream = require('merge-stream');
 const buildDirectory = 'build/bundled';
-const del = require('del');
 
 /**
  * Waits for the given ReadableStream
@@ -42,17 +42,17 @@ function build() {
           // Oh, well do you want to minify stuff? Go for it! 
           // Here's how splitHtml & gulpif work
           .pipe(polymerProject.splitHtml())
-          // .pipe(gulpif(/\.js$/, new JSOptimizeStream(optimizeOptions.js)))
-          // .pipe(gulpif(/\.css$/, new CSSOptimizeStream(optimizeOptions.css)))
-          // .pipe(gulpif(/\.html$/, new HTMLOptimizeStream(optimizeOptions.html)))
+          // .pipe(gulpif(/\.js$/, uglify()))
+          // .pipe(gulpif(/\.css$/, cssSlam()))
+          // .pipe(gulpif(/\.html$/, htmlMinifier()))
           .pipe(polymerProject.rejoinHtml());
 
         // Okay now lets do the same to your dependencies
         let depsStream = polymerProject.dependencies()
           .pipe(polymerProject.splitHtml())
-          // .pipe(gulpif(/\.js$/, new JSOptimizeStream(optimizeOptions.js)))
-          // .pipe(gulpif(/\.css$/, new CSSOptimizeStream(optimizeOptions.css)))
-          // .pipe(gulpif(/\.html$/, new HTMLOptimizeStream(optimizeOptions.html)))
+          // .pipe(gulpif(/\.js$/, uglify()))
+          // .pipe(gulpif(/\.css$/, cssSlam()))
+          // .pipe(gulpif(/\.html$/, htmlMinifier()))
           .pipe(polymerProject.rejoinHtml());
 
         // Okay, now lets merge them into a single build stream.

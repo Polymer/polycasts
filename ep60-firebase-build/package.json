@@ -3,12 +3,9 @@
   "version": "0.0.0",
   "description": "A starting point for Polymer & Firebase apps",
   "scripts": {
-    "build": "node --harmony-async-await `which gulp`"
+    "build": "gulp"
   },
   "license": "http://polymer.github.io/LICENSE.txt",
-  "bugs": {
-    "url": "https://github.com/PolymerElements/generator-polymer-init-firebase/issues"
-  },
   "engines": {
     "node": ">=4.0"
   },
