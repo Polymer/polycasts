@@ -1,0 +1,84 @@
+/**
+ * @license
+ * Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+
+'use strict';
+
+// Documentation on what goes into PolymerProject.
+const path = require('path');
+const gulp = require('gulp');
+const polymerJsonPath = path.join(process.cwd(), 'polymer.json');
+const polymerJSON = require(polymerJsonPath);
+const polymer = require('polymer-build');
+const polymerProject = new polymer.PolymerProject(polymerJSON);
+const mergeStream = require('merge-stream');
+const buildDirectory = 'build/bundled';
+const del = require('del');
+
+/**
+ * Waits for the given ReadableStream
+ */
+function waitFor(stream) {
+  return new Promise((resolve, reject) => {
+    stream.on('end', resolve);
+    stream.on('error', reject);
+  });
+}
+
+function build() {
+  return new Promise((resolve, reject) => {
+    // Okay, so first thing we do is clear the build
+    console.log(`Deleting build/ directory...`);
+    del([buildDirectory])
+      .then(_ => {
+        // Okay, now lets get your source files
+        let sourcesStream = polymerProject.sources()
+          // Oh, well do you want to minify stuff? Go for it! 
+          // Here's how splitHtml & gulpif work
+          .pipe(polymerProject.splitHtml())
+          // .pipe(gulpif(/\.js$/, new JSOptimizeStream(optimizeOptions.js)))
+          // .pipe(gulpif(/\.css$/, new CSSOptimizeStream(optimizeOptions.css)))
+          // .pipe(gulpif(/\.html$/, new HTMLOptimizeStream(optimizeOptions.html)))
+          .pipe(polymerProject.rejoinHtml());
+
+        // Okay now lets do the same to your dependencies
+        let depsStream = polymerProject.dependencies()
+          .pipe(polymerProject.splitHtml())
+          // .pipe(gulpif(/\.js$/, new JSOptimizeStream(optimizeOptions.js)))
+          // .pipe(gulpif(/\.css$/, new CSSOptimizeStream(optimizeOptions.css)))
+          // .pipe(gulpif(/\.html$/, new HTMLOptimizeStream(optimizeOptions.html)))
+          .pipe(polymerProject.rejoinHtml());
+
+        // Okay, now lets merge them into a single build stream.
+        let buildStream = mergeStream(sourcesStream, depsStream)
+          .once('data', () => {
+            console.log('Analyzing build dependencies...');
+          });
+
+        // If you want bundling, do some bundling! Explain why?
+        buildStream = buildStream.pipe(polymerProject.bundler);
+
+        // If you want to add prefetch links, do it! Explain why?
+        // buildStream = buildStream.pipe(new PrefetchTransform(polymerProject));
+
+        // Okay, time to pipe to the build directory
+        buildStream = buildStream.pipe(gulp.dest(buildDirectory));
+
+        // waitFor the buildStream to complete
+        return waitFor(buildStream);
+      })
+      .then(_ => {
+        // You did it!
+        console.log('Build complete!');
+        resolve();
+      });
+  });
+}
+
+gulp.task('default', build);

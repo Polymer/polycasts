@@ -1,0 +1,23 @@
+{
+  "name": "my-project",
+  "version": "0.0.0",
+  "description": "A starting point for Polymer & Firebase apps",
+  "scripts": {
+    "build": "node --harmony-async-await `which gulp`"
+  },
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/PolymerElements/generator-polymer-init-firebase/issues"
+  },
+  "engines": {
+    "node": ">=4.0"
+  },
+  "private": true,
+  "devDependencies": {
+    "del": "^2.2.1",
+    "gulp": "gulpjs/gulp#4.0",
+    "merge-stream": "^1.0.0",
+    "plylog": "^0.4.0",
+    "polymer-build": "^0.6.0-alpha.3"
+  }
+}
