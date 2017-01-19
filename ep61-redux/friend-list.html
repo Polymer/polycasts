@@ -1,0 +1,25 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="redux-store.html">
+
+<dom-module id="friend-list">
+  <template>
+    <ul>
+      <template is="dom-repeat" items="[[friends]]" as="friend">
+        <li>[[friend]]</li>
+      </template>
+    </ul>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'friend-list',
+      behaviors: [ ReduxBehavior ],
+      properties: {
+        friends: {
+          type: Array,
+          statePath: 'friends'
+        }
+      },
+    });
+  </script>
+</dom-module>
