@@ -1,0 +1,105 @@
+<!--
+@license
+Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="../polymer/lib/utils/gestures.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+
+<dom-module id="polycast-checklist">
+  <template>
+    <style>
+      .task {
+        display: flex;
+        align-items: center;
+      }
+
+      paper-input {
+        display: inline-block;
+      }
+    </style>
+
+    <h1>[[name]]</h1>
+
+    <div>Todo:</div>
+    <dom-repeat
+        items="{{tasks}}"
+        as="task"
+        filter="isNotCompleted"
+        observe="completed">
+      <template>
+        <div class="task">
+          <paper-checkbox checked="{{task.completed}}"></paper-checkbox>
+          <paper-input
+              no-label-float label="Task Name"
+              value="{{task.name}}">
+          </paper-input>
+        </div>
+      </template>
+    </dom-repeat>
+
+    <div>Completed:</div>
+    <dom-repeat
+        items="{{tasks}}"
+        as="task"
+        filter="isCompleted"
+        observe="completed">
+      <template>
+        <div class="task">
+          <paper-checkbox checked="{{task.completed}}"></paper-checkbox>
+          <paper-input
+              no-label-float label="Task Name"
+              value="{{task.name}}">
+          </paper-input>
+        </div>
+      </template>
+    </dom-repeat>
+
+    <paper-button on-click="addTask" raised>Add Task</paper-button>
+  </template>
+
+  <script>
+    class PolycastChecklist extends Polymer.Element {
+      static get is() { return 'polycast-checklist'; }
+      static get properties() {
+        return {
+          name: {
+            type: String
+          },
+
+          tasks: {
+            type: Array,
+            value: function() { return []; }
+          }
+        };
+      }
+
+      addTask() {
+        const newTask = {
+          completed: false,
+          name: ''
+        };
+
+        this.push('tasks', newTask);
+      }
+
+      isCompleted(task) {
+        return task.completed;
+      }
+
+      isNotCompleted(task) {
+        return !task.completed;
+      }
+    }
+
+    window.customElements.define(PolycastChecklist.is, PolycastChecklist);
+  </script>
+</dom-module>

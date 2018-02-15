@@ -9,4 +9,4 @@
 </p>
 
 Each episode contains an example project, which lives in this repo.
-If you have questions, concerns, comments, etc. file an issue or hit me up on the twitters [@rob_dodson](http://twitter.com/rob_dodson)
+If you have questions, concerns, comments, etc. file an issue or hit us up on the twitters [@Elliott_Marquez](https://twitter.com/elliott_marquez) [@rob_dodson](https://twitter.com/rob_dodson)
