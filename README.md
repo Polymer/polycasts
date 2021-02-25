@@ -1,3 +1,5 @@
+**This repo is now archived. Please follow our Twitter account for future updates**
+
 # Polycasts
 
 [Polycasts](https://www.youtube.com/playlist?list=PLOU2XLYxmsII5c3Mgw6fNYCzaWrsM3sMN) is a biweekly YouTube series covering all things Polymer and Web Components.
